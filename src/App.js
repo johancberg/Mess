@@ -34,7 +34,7 @@ function App() {
       <header className="App-header">
         <h4>This is my Firebase app</h4>
         <h1>Mess</h1>
-        {user ? <ChatRoom auth={auth} /> : <SignIn auth={auth} />}
+        {user ? <ChatRoom auth={auth} messageStore={firestore} /> : <SignIn auth={auth} />}
       </header>
     </div>
   );
