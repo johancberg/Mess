@@ -14,7 +14,7 @@ const SignIn = ({ auth }) => {
     return (
         <div className="main-page">
             <h2>You're not logged in</h2>
-            <button className="sign-in" onClick={ signInWithGoogle }>Sign In</button>
+            <button className="sign-in " onClick={ signInWithGoogle }><i class="fab fa-google"></i> Sign In</button>
         </div>
     )
 }

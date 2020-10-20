@@ -96,6 +96,10 @@ button:disabled {
   margin: 0 auto;
 }
 
+.fab {
+  position: relative;
+  top: 0.04em;
+}
 
 p {
   max-width: 500px;
