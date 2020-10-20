@@ -9,6 +9,9 @@
 # testing
 /coverage
 
+# API keys exist
+src/App.js
+
 # production
 /build
 
