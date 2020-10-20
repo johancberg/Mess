@@ -71,9 +71,6 @@ h2, h3, h4, h5 {
   width: 100%;
 }
 
-.input-message input {
-}
-
 .input-message > *, button {
   font-size: 1.6rem;
   padding: 0.4em;
