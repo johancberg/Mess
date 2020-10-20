@@ -1,4 +1,3 @@
-import { auth } from 'firebase';
 import React from 'react';
 
 // Firebase imports
@@ -13,9 +12,9 @@ const SignIn = ({ auth }) => {
     }
 
     return (
-        <div>
-            <h4>You're not logged in!</h4>
-            <button onClick={ signInWithGoogle }>Sign In</button>
+        <div className="main-page">
+            <h2>You're not logged in</h2>
+            <button className="sign-in" onClick={ signInWithGoogle }>Sign In</button>
         </div>
     )
 }

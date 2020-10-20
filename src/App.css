@@ -1,3 +1,9 @@
+body {
+  position: relative;
+  background-color: #282c34;
+  min-height: 100vh;
+}
+
 .App {
   text-align: center;
 }
@@ -14,12 +20,13 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  position: relative;
+  min-height: 10vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 1em;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -28,12 +35,101 @@
   color: #61dafb;
 }
 
+.main-page {
+  display: flex;
+  min-height: 90vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 h1 {
-  margin: 0 auto 0.4em;
+  margin-top: 0;
+  margin-bottom: 0.4em;
 }
 
 h2, h3, h4, h5 {
-  margin: 0.1em auto;
+  margin-top: 0.1em;
+  margin-bottom: 0.5em;
+  color: #EEE;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+}
+
+.message-box {
+  position: relative;
+  padding: 0 2.5em;
+}
+
+.input-message {
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.input-message input {
+}
+
+.input-message > *, button {
+  font-size: 1.6rem;
+  padding: 0.4em;
+}
+
+button {
+  color: white;
+  background-color: rgb(56, 56, 143);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sign-in {
+  color: #282c34;
+  background: white;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+p {
+  max-width: 500px;
+  margin-bottom: 12px;
+  line-height: 24px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+.sent {
+  flex-direction: row-reverse;
+}
+
+.sent p {
+  color: white;
+  background: #0b93f6;
+  align-self: flex-end;
+}
+.received p {
+  background: #e5e5ea;
+  color: black;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 2px 5px;
 }
 
 @keyframes App-logo-spin {

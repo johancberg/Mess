@@ -11,7 +11,6 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCD0fNVJy2z0uOj48LkRkbRjYrj9nVmTzw",
@@ -32,10 +31,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h4>This is my Firebase app</h4>
         <h1>Mess</h1>
-        {user ? <ChatRoom auth={auth} messageStore={firestore} /> : <SignIn auth={auth} />}
+        {user ? ( auth.currentUser ? <button onClick={() => auth.signOut()}>Sign out</button> : '') : ''}
       </header>
+      {user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} />}
     </div>
   );
 }
