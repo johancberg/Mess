@@ -4,6 +4,7 @@ import './App.css';
 // Components
 import ChatRoom from './components/ChatRoom'
 import SignIn from './components/SignIn'
+import ApiKey from './components/ApiKey'
 
 // Firebase imports
 import firebase from 'firebase/app';
@@ -13,7 +14,7 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCD0fNVJy2z0uOj48LkRkbRjYrj9nVmTzw",
+  apiKey: ApiKey(),
   authDomain: "mess-3ng3r.firebaseapp.com",
   databaseURL: "https://mess-3ng3r.firebaseio.com",
   projectId: "mess-3ng3r",
