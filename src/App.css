@@ -65,15 +65,24 @@ h2, h3, h4, h5 {
 }
 
 .input-message {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   margin-bottom: auto;
   width: 100%;
+  display: flex;
 }
 
 .input-message > *, button {
   font-size: 1.6rem;
   padding: 0.4em;
+  outline: none;
+  border: none;
+}
+
+.input-message input {
+  width: 100%;
+  font-size: 1.2rem;
+  background: rgb(238, 238, 238);
 }
 
 button {
