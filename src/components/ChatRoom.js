@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 // Components
 import ChatMessage from './ChatMessage';
@@ -12,6 +12,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const ChatRoom = ({ auth, firestore }) => {
     
+    const scroll = useRef();
     const messageRef = firestore.collection('messages'); 
     const query = messageRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(query, {idField : 'id'});
@@ -28,16 +29,18 @@ const ChatRoom = ({ auth, firestore }) => {
             photoURL
         });
         setFormValue('');
+        scroll.current.scrollIntoView({behavior: 'smooth' });
     }
 
     return (
         <>
             <main className="message-box">
                 { messages && messages.map(msg => <ChatMessage auth={auth} key={msg.id} message={msg} />)}
+                <div ref={scroll}></div>
             </main>
 
             <form className="input-message" onSubmit={sendMessage}>
-                <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Write something"}/>
+                <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} >Send</button>
             </form>
         </>
