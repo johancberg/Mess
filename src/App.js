@@ -14,15 +14,7 @@ import 'firebase/auth';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-firebase.initializeApp({
-  apiKey: ApiKey(),
-  authDomain: "mess-3ng3r.firebaseapp.com",
-  databaseURL: "https://mess-3ng3r.firebaseio.com",
-  projectId: "mess-3ng3r",
-  storageBucket: "mess-3ng3r.appspot.com",
-  messagingSenderId: "48326566726",
-  appId: "1:48326566726:web:207dea2f65711eb639fb47"
-})
+firebase.initializeApp(ApiKey())
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
