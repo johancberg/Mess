@@ -11,6 +11,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding: 0 1em;
   color: white;
   min-height: calc(10vh);
@@ -75,7 +76,7 @@ h2, h3, h4, h5 {
 }
 
 .login-buttons button {
-  margin:  0.3em 0.7em;
+  margin:  0.7em 0.7em 0.3em;
 }
 
 button {
@@ -84,11 +85,17 @@ button {
   border: none;
   text-decoration: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+button:hover {
+  color: white;
+  background-color: rgb(78, 78, 197);
 }
 
 .signin-form {
@@ -123,10 +130,20 @@ label {
 .sign-in.google {
   color: white;
   background-color: #db4437;
+  transition: background-color 0.3s ease;
+}
+
+.sign-in.google:hover {
+  color: #db4437;
+  background-color: white;
 }
 
 .switch-login {
   color: white;
+}
+
+.switch-login p {
+  margin: 0;
 }
 
 .switch-login span {

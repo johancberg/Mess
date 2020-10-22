@@ -24,11 +24,11 @@ const SignIn = ({ auth }) => {
         if (registerPage) {
             //Register
             auth.createUserWithEmailAndPassword(email, password)
-            .catch(error => console.log('error sign up ' + error))
+            .catch(error => alert(error))
         } else {
             //Login
             auth.signInWithEmailAndPassword(email, password)
-            .catch(error => console.log('error sign in ' + error))
+            .catch(error => alert(error))
         }
     }
 
@@ -43,15 +43,14 @@ const SignIn = ({ auth }) => {
                 <button className="sign-in" onClick={ signInWithPassword }>{ registerPage ? 'Register' : 'Login' }</button>
                 <button className="sign-in google" onClick={ signInWithGoogle }><i className="fab fa-google"></i> Sign In</button>
             </div>
-            {registerPage ? (
-                <div className="switch-login">
-                    Already have an account? <span onClick={() => setRegisterPage(false)}>Login here!</span>
-                </div>
-            ) : (
-                <div className="switch-login"> 
-                    Don't have an account? <span onClick={() => setRegisterPage(true)}>Register here!</span>
-                </div>
-            )}
+            
+            <div className="switch-login">
+                {registerPage ? (
+                    <p>Already have an account? <span onClick={() => setRegisterPage(false)}>Login here!</span></p>
+                ) : (
+                    <p>Don't have an account? <span onClick={() => setRegisterPage(true)}>Register here!</span></p>
+                )}
+            </div>
         </div>
     )
 }
