@@ -89,6 +89,10 @@ h2, h3, h4, h5 {
   background: rgb(238, 238, 238);
 }
 
+.login-buttons button {
+  margin:  0.3em 0.7em;
+}
+
 button {
   color: white;
   background-color: rgb(56, 56, 143);
@@ -114,8 +118,14 @@ form div {
 }
 
 label {
+  font-size: 1.3rem;
   color: white;
   margin-right: 1em;
+}
+
+form div input {
+  font-size: 1.2rem;
+  border: none;
 }
 
 .sign-in {
@@ -128,6 +138,10 @@ label {
 .sign-in.google {
   color: white;
   background-color: #db4437;
+}
+
+.switch-login {
+  color: white;
 }
 
 .switch-login span {
