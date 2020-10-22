@@ -23,6 +23,7 @@ body {
 
 .hide {
   display: none;
+  transition: all 0.3s ease;
 }
 
 .main-page {
@@ -51,12 +52,15 @@ h2, h3, h4, h5 {
 h6 {
   margin: 0;
   color: #FFF;
+  width: 90%;
+  text-align: end;
 }
 
 .message {
-  margin: 14px 0 8px;
+  margin: 9px 0 6px;
   display: flex;
   align-items: center;
+  transition: all 0.5s ease;
 }
 
 .message-box {
@@ -202,7 +206,7 @@ img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin: 2px 5px;
+  margin: 9px 5px;
 }
 
 @keyframes App-logo-spin {
