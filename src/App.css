@@ -106,12 +106,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
-form {
+.signin-form {
   display: flex;
   flex-direction: column;
 }
 
-form div {
+.signin-form div {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.6em;
@@ -123,7 +123,7 @@ label {
   margin-right: 1em;
 }
 
-form div input {
+.signin-form div input {
   font-size: 1.2rem;
   border: none;
 }
@@ -131,7 +131,7 @@ form div input {
 .sign-in {
   color: #282c34;
   background: white;
-  max-width: 400px;
+  min-width: 120px;
   margin: 0 auto;
 }
 
