@@ -48,6 +48,10 @@ h1 {
   margin-bottom: 0.4em;
 }
 
+h2 {
+  font-size: 2.6rem;
+}
+
 h2, h3, h4, h5 {
   margin-top: 0.1em;
   margin-bottom: 0.5em;
@@ -98,11 +102,38 @@ button:disabled {
   cursor: not-allowed;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6em;
+}
+
+label {
+  color: white;
+  margin-right: 1em;
+}
+
 .sign-in {
   color: #282c34;
   background: white;
   max-width: 400px;
   margin: 0 auto;
+}
+
+.sign-in.google {
+  color: white;
+  background-color: #db4437;
+}
+
+.switch-login span {
+  color: deepskyblue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .fab {
