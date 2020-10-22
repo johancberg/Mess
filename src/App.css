@@ -1,7 +1,6 @@
 body {
   position: relative;
   background-color: #282c34;
-  min-height: 100vh;
 }
 
 .App {
@@ -14,6 +13,7 @@ body {
   flex-direction: row;
   padding: 0 1em;
   color: white;
+  min-height: calc(10vh);
 }
 
 .App-link {
@@ -22,7 +22,7 @@ body {
 
 .main-page {
   display: flex;
-  min-height: 90vh;
+  min-height: calc(90vh);
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -30,8 +30,7 @@ body {
 
 h1 {
   font-size: calc(2.6rem + 2vmin);
-  margin-top: 0;
-  margin-bottom: 0.4em;
+  margin: 0;
 }
 
 h2 {
