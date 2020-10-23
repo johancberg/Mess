@@ -23,14 +23,6 @@ function App() {
   const [user] = useAuthState(auth);
   const [menu, setMenu] = useState(false)
 
-  function dropdownMenu() {
-    return (
-      <div>
-        
-      </div>
-    )
-  }
-
   return (
     <div className="App">
       <header className="App-header">
@@ -40,6 +32,7 @@ function App() {
             <div className="options" onClick={() => setMenu(!menu)}>
               <i className="fas fa-ellipsis-v"></i>
             </div>
+            {menu && <div className="dropdownBlocker" onClick={() => setMenu(!menu)}></div> }
             {menu && <div className="dropdownMenu"><button onClick={() => auth.signOut()}>Sign out</button></div> }
           </div>
         : '') : ''}
