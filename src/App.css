@@ -110,10 +110,16 @@ button:hover {
   color: white;
   background-color: rgb(78, 78, 197);
 }
+.options {
+  cursor: pointer;
+}
 
-button.signout {
+.dropdownMenu {
   position: absolute;
-  transform: translateX(-100%);
+  width: 8em;
+  padding: 0.6em 0.3em;
+  transform: translateX(-80%);
+  background-color: rgb(56, 56, 103);
 }
 
 .options {

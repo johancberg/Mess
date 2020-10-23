@@ -46,7 +46,7 @@ const SignIn = ({ auth }) => {
                     <div><label>E-mail </label><input type="email" onChange={e => setStateEmail(e.target.value)}></input></div>
                     <div><label>Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStatePassword(e.target.value)}></input></div>
                     { registerPage ?
-                    <div><label>Retype Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStateRetypePassword(e.target.value)}></input></div>
+                    <div><label>Rewrite Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStateRetypePassword(e.target.value)}></input></div>
                     : ''}
                 </form>
             <div className="login-buttons">

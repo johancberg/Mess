@@ -40,7 +40,7 @@ function App() {
             <div className="options" onClick={() => setMenu(!menu)}>
               <i className="fas fa-ellipsis-v"></i>
             </div>
-            {menu && <button className="signout" onClick={() => auth.signOut()}>Sign out</button> }
+            {menu && <div className="dropdownMenu"><button onClick={() => auth.signOut()}>Sign out</button></div> }
           </div>
         : '') : ''}
       </header>
