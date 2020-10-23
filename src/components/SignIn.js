@@ -7,7 +7,7 @@ import 'firebase/auth';
 
 const SignIn = ({ auth }) => {
     let showPassword = false
-    const [ registerPage, setRegisterPage ] = useState(true)
+    const [ registerPage, setRegisterPage ] = useState(false)
     const [ stateEmail, setStateEmail] = useState({email: ''})
     const [ statePassword, setStatePassword] = useState({password: ''})
     const [ stateRedoPassword, setStateRetypePassword] = useState({redoPassword: ''})
@@ -26,11 +26,13 @@ const SignIn = ({ auth }) => {
         if (registerPage) {
             //Register
             const redoPassword = stateRedoPassword
-            if (password === redoPassword) {
+            if (password !== redoPassword) {
+                alert('Error: The passwords do not match. Try again.')
+            } else if (password.length < 6) {
+                alert('Error: The password has to be 6 characters or longer.')
+            } else {
                 auth.createUserWithEmailAndPassword(email, password)
                 .catch(error => alert(error))
-            } else {
-                alert('Error: The passwords do not match. Try again.')
             }
         } else {
             //Login
