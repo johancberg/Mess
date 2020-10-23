@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import './fontawesome/css/all.css';
 
@@ -21,11 +21,12 @@ const firestore = firebase.firestore();
 
 function App() {
   const [user] = useAuthState(auth);
+  const [menu, setMenu] = useState(false)
 
   function dropdownMenu() {
     return (
       <div>
-        <button onClick={() => auth.signOut()}>Sign out</button>
+        
       </div>
     )
   }
@@ -35,8 +36,11 @@ function App() {
       <header className="App-header">
         <h1>Mess</h1>
         {user ? ( auth.currentUser ?
-          <div className="options" onClick={dropdownMenu}>
-            <i className="fas fa-ellipsis-v"></i>
+          <div>
+            <div className="options" onClick={() => setMenu(!menu)}>
+              <i className="fas fa-ellipsis-v"></i>
+            </div>
+            {menu && <button className="signout" onClick={() => auth.signOut()}>Sign out</button> }
           </div>
         : '') : ''}
       </header>
