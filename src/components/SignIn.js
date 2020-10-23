@@ -9,6 +9,7 @@ const SignIn = ({ auth }) => {
     const [ registerPage, setRegisterPage ] = useState(true)
     const [ stateEmail, setStateEmail] = useState({email: ''})
     const [ statePassword, setStatePassword] = useState({password: ''})
+    const [ stateRedoPassword, setStateRetypePassword] = useState({redoPassword: ''})
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -23,8 +24,13 @@ const SignIn = ({ auth }) => {
         const password = statePassword
         if (registerPage) {
             //Register
-            auth.createUserWithEmailAndPassword(email, password)
-            .catch(error => alert(error))
+            const redoPassword = stateRedoPassword
+            if (password === redoPassword) {
+                auth.createUserWithEmailAndPassword(email, password)
+                .catch(error => alert(error))
+            } else {
+                alert('Error: The passwords do not match. Try again.')
+            }
         } else {
             //Login
             auth.signInWithEmailAndPassword(email, password)
@@ -38,6 +44,7 @@ const SignIn = ({ auth }) => {
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
                     <div><label>E-mail </label><input type="email" onChange={e => setStateEmail(e.target.value)}></input></div>
                     <div><label>Password </label><input type="password" onChange={e => setStatePassword(e.target.value)}></input></div>
+                    { registerPage ? <div><label>Retype Password </label><input type="password" onChange={e => setStateRetypePassword(e.target.value)}></input></div> : ''}
                 </form>
             <div className="login-buttons">
                 <button className="sign-in" onClick={ signInWithPassword }>{ registerPage ? 'Register' : 'Login' }</button>
