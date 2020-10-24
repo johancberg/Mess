@@ -10,7 +10,7 @@ const SignIn = ({ auth }) => {
     const [ stateEmail, setStateEmail] = useState({email: ''})
     const [ statePassword, setStatePassword] = useState({password: ''})
     const [ stateRedoPassword, setStateRetypePassword] = useState({redoPassword: ''})
-    const [ showEye, setShowEye] = useState(false)
+    const [ showEye, setShowEye] = useState({ pass: false, rewrite: false })
     const [ showPassword, setShowPassword] = useState(false)
 
     // Executes when the user logs in using its Google Account
@@ -50,13 +50,13 @@ const SignIn = ({ auth }) => {
                         <input type="email" onChange={e => setStateEmail(e.target.value)}></input>
                     </div>
                     <div><label>Password </label>
-                        <input type={ showPassword ? 'text' : 'password' } onFocus={ () => setShowEye(true) } onBlur={ () => setShowEye(false) } onChange={e => setStatePassword(e.target.value)}></input>
-                        { showEye ? <i onMouseOver={() => setShowPassword(true)} onMouseLeave={() => setShowPassword(false)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
+                        <input type={ showPassword.pass ? 'text' : 'password' } onFocus={ () => setShowEye({pass: true}) } onBlur={ () => setShowEye({pass: false}) } onChange={e => setStatePassword(e.target.value)}></input>
+                        { showEye.pass ? <i onMouseOver={() => setShowPassword({pass: true})} onMouseLeave={() => setShowPassword({pass: false})} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
                     </div>
                     { registerPage ?
                     <div><label>Rewrite Password </label>
-                        <input type={ showPassword ? 'text' : 'password' } onFocus={ () => setShowEye(true) } onBlur={ () => setShowEye(false) } onChange={e => setStateRetypePassword(e.target.value)}></input>
-                        { showEye ? <i onMouseOver={() => setShowPassword(true)} onMouseLeave={() => setShowPassword(false)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
+                        <input type={ showPassword.rewrite ? 'text' : 'password' } onFocus={ () => setShowEye({rewrite: true}) } onBlur={ () => setShowEye({rewrite: false}) } onChange={e => setStateRetypePassword(e.target.value)}></input>
+                        { showEye.rewrite ? <i onMouseOver={() => setShowPassword({rewrite: true})} onMouseLeave={() => setShowPassword({rewrite: false})} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
                     </div>
                     : ''}
                 </form>
