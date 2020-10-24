@@ -10,9 +10,9 @@ import PasswordInput from './PasswordInput';
 
 const SignIn = ({ auth }) => {
     const [ registerPage, setRegisterPage ] = useState(false)
-    const [ stateEmail, setStateEmail] = useState({email: ''})
-    const [ statePassword, setStatePassword] = useState({password: ''})
-    const [ stateRewritePassword, setStateRewritePassword] = useState({redoPassword: ''})
+    const [ stateEmail, setStateEmail] = useState('')
+    const [ statePassword, setStatePassword] = useState('')
+    const [ stateRewritePassword, setStateRewritePassword] = useState('')
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -43,16 +43,24 @@ const SignIn = ({ auth }) => {
         }
     }
 
+    function resetForm(condition) {
+        setRegisterPage(condition)
+        setStateEmail('')
+        setStatePassword('')
+        setStateRewritePassword('')
+
+    }
+
     return (
         <div className="main-page">
                 <form className="signin-form">
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
                     <div><label>E-mail </label>
-                        <input type="email" onKeyPress onChange={e => setStateEmail(e.target.value)}></input>
+                        <input type="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
                     </div>
-                    <PasswordInput label={'Password'} stateType={setStatePassword} />
+                    <PasswordInput label={'Password'} stateType={setStatePassword} value={statePassword}/>
                     { registerPage ?
-                    <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} />
+                    <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} value={stateRewritePassword} />
                     : ''}
                 </form>
             <div className="login-buttons">
@@ -62,9 +70,9 @@ const SignIn = ({ auth }) => {
             
             <div className="switch-login">
                 {registerPage ? (
-                    <p>Already have an account? <span onClick={() => {setRegisterPage(false)}}>Login here!</span></p>
+                    <p>Already have an account? <span onClick={() => resetForm(false)}>Login here!</span></p>
                 ) : (
-                    <p>Don't have an account? <span onClick={() => {setRegisterPage(true)}}>Register here!</span></p>
+                    <p>Don't have an account? <span onClick={() => resetForm(true)}>Register here!</span></p>
                 )}
             </div>
         </div>
