@@ -6,11 +6,11 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const SignIn = ({ auth }) => {
-    let showPassword = false
     const [ registerPage, setRegisterPage ] = useState(false)
     const [ stateEmail, setStateEmail] = useState({email: ''})
     const [ statePassword, setStatePassword] = useState({password: ''})
     const [ stateRedoPassword, setStateRetypePassword] = useState({redoPassword: ''})
+    const [ showPassword, setShowPassword] = useState(false)
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -46,9 +46,9 @@ const SignIn = ({ auth }) => {
                 <form className="signin-form">
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
                     <div><label>E-mail </label><input type="email" onChange={e => setStateEmail(e.target.value)}></input></div>
-                    <div><label>Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStatePassword(e.target.value)}></input></div>
+                    <div><label>Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStatePassword(e.target.value)}></input><i onClick={() => setShowPassword(!showPassword)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i></div>
                     { registerPage ?
-                    <div><label>Rewrite Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStateRetypePassword(e.target.value)}></input></div>
+                    <div><label>Rewrite Password </label><input type={ showPassword ? 'text' : 'password' } onChange={e => setStateRetypePassword(e.target.value)}></input><i onClick={() => setShowPassword(!showPassword)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i></div>
                     : ''}
                 </form>
             <div className="login-buttons">

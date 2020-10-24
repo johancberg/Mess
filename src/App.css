@@ -144,9 +144,17 @@ button:hover {
 }
 
 .signin-form div {
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.6em;
+}
+
+.signin-form div i {
+  position: absolute;
+  right: 10px;
+  transform: translateY(40%);
+  cursor: pointer;
 }
 
 label {
