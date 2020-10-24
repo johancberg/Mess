@@ -5,13 +5,14 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+//Components
+import PasswordInput from './PasswordInput';
+
 const SignIn = ({ auth }) => {
     const [ registerPage, setRegisterPage ] = useState(false)
     const [ stateEmail, setStateEmail] = useState({email: ''})
     const [ statePassword, setStatePassword] = useState({password: ''})
-    const [ stateRedoPassword, setStateRetypePassword] = useState({redoPassword: ''})
-    const [ showEye, setShowEye] = useState({ pass: false, rewrite: false })
-    const [ showPassword, setShowPassword] = useState(false)
+    const [ stateRewritePassword, setStateRewritePassword] = useState({redoPassword: ''})
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -26,7 +27,7 @@ const SignIn = ({ auth }) => {
         const password = statePassword
         if (registerPage) {
             //Register
-            const redoPassword = stateRedoPassword
+            const redoPassword = stateRewritePassword
             if (password !== redoPassword) {
                 alert('Error: The passwords do not match. Try again.')
             } else if (password.length < 6) {
@@ -47,17 +48,11 @@ const SignIn = ({ auth }) => {
                 <form className="signin-form">
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
                     <div><label>E-mail </label>
-                        <input type="email" onChange={e => setStateEmail(e.target.value)}></input>
+                        <input type="email" onKeyPress onChange={e => setStateEmail(e.target.value)}></input>
                     </div>
-                    <div><label>Password </label>
-                        <input type={ showPassword.pass ? 'text' : 'password' } onFocus={ () => setShowEye({pass: true}) } onBlur={ () => setShowEye({pass: false}) } onChange={e => setStatePassword(e.target.value)}></input>
-                        { showEye.pass ? <i onMouseOver={() => setShowPassword({pass: true})} onMouseLeave={() => setShowPassword({pass: false})} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
-                    </div>
+                    <PasswordInput label={'Password'} stateType={setStatePassword} />
                     { registerPage ?
-                    <div><label>Rewrite Password </label>
-                        <input type={ showPassword.rewrite ? 'text' : 'password' } onFocus={ () => setShowEye({rewrite: true}) } onBlur={ () => setShowEye({rewrite: false}) } onChange={e => setStateRetypePassword(e.target.value)}></input>
-                        { showEye.rewrite ? <i onMouseOver={() => setShowPassword({rewrite: true})} onMouseLeave={() => setShowPassword({rewrite: false})} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
-                    </div>
+                    <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} />
                     : ''}
                 </form>
             <div className="login-buttons">
@@ -67,9 +62,9 @@ const SignIn = ({ auth }) => {
             
             <div className="switch-login">
                 {registerPage ? (
-                    <p>Already have an account? <span onClick={() => {setRegisterPage(false); setShowPassword(false)}}>Login here!</span></p>
+                    <p>Already have an account? <span onClick={() => {setRegisterPage(false)}}>Login here!</span></p>
                 ) : (
-                    <p>Don't have an account? <span onClick={() => {setRegisterPage(true); setShowPassword(false)}}>Register here!</span></p>
+                    <p>Don't have an account? <span onClick={() => {setRegisterPage(true)}}>Register here!</span></p>
                 )}
             </div>
         </div>
