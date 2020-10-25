@@ -21,7 +21,7 @@ const SignIn = ({ auth }) => {
     }
 
     // Gets executed when use logs in or register using email and password
-    function signInWithPassword(e) {
+    const signInWithPassword = e => {
         e.preventDefault()
         const email = stateEmail
         const password = statePassword
@@ -58,9 +58,9 @@ const SignIn = ({ auth }) => {
                     <div><label>E-mail </label>
                         <input type="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
                     </div>
-                    <PasswordInput label={'Password'} stateType={setStatePassword} value={statePassword}/>
+                    <PasswordInput label={'Password'} stateType={setStatePassword} value={statePassword} function={signInWithPassword}/>
                     { registerPage ?
-                    <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} value={stateRewritePassword} />
+                    <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} value={stateRewritePassword} passFunction={signInWithPassword}/>
                     : ''}
                 </form>
             <div className="login-buttons">
