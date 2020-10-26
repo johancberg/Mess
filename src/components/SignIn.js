@@ -59,9 +59,9 @@ const SignIn = ({ auth }) => {
                         <input type="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
                     </div>
                     <PasswordInput label={'Password'} stateType={setStatePassword} value={statePassword} function={signInWithPassword}/>
-                    { registerPage ?
+                    { registerPage &&
                     <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} value={stateRewritePassword} passFunction={signInWithPassword}/>
-                    : ''}
+                    }
                 </form>
             <div className="login-buttons">
                 <button className="sign-in" onClick={ signInWithPassword }>{ registerPage ? 'Register' : 'Login' }</button>

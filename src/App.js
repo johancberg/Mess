@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import './fontawesome/css/all.css';
 
@@ -27,11 +27,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Mess</h1>
-        {user ? ( auth.currentUser ?
-          <Options auth={auth} />
-        : '') : ''}
+        { auth.currentUser && <Options auth={auth} /> }
       </header>
-      {user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} />}
+      { user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} /> }
     </div>
   );
 }

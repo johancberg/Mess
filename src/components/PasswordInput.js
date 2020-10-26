@@ -14,7 +14,7 @@ const PasswordInput = ({ label, stateType, value, passFunction }) => {
     return (
     <div><label>{label}</label>
         <input type={ showPassword ? 'text' : 'password' } value={value} onFocus={ () => setShowEye(true) } onBlur={ () => { setShowEye(false); setShowPassword(false) } } onChange={e => stateType(e.target.value)} onKeyPress={handleKeyPress}></input>
-        { showEye ? <i onMouseOver={() => setShowPassword(true)} onMouseLeave={() => setShowPassword(false)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> : '' }
+        { showEye && <i onMouseOver={() => setShowPassword(true)} onMouseLeave={() => setShowPassword(false)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> }
     </div>
     )
 }
