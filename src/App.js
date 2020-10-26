@@ -6,6 +6,7 @@ import './fontawesome/css/all.css';
 import ChatRoom from './components/ChatRoom'
 import SignIn from './components/SignIn'
 import ApiKey from './components/ApiKey'
+import Options from './components/Options'
 
 // Firebase imports
 import firebase from 'firebase/app';
@@ -21,20 +22,13 @@ const firestore = firebase.firestore();
 
 function App() {
   const [user] = useAuthState(auth);
-  const [menu, setMenu] = useState(false)
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Mess</h1>
         {user ? ( auth.currentUser ?
-          <div>
-            <div className="options" onClick={() => setMenu(!menu)}>
-              <i className="fas fa-ellipsis-v"></i>
-            </div>
-            {menu && <div className="dropdownBlocker" onClick={() => setMenu(!menu)}></div> }
-            {menu && <div className="dropdownMenu"><button onClick={() => {auth.signOut(); setMenu(!menu)}}>Sign out</button></div> }
-          </div>
+          <Options auth={auth} />
         : '') : ''}
       </header>
       {user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} />}
