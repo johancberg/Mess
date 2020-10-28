@@ -40,7 +40,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 <div ref={scroll}></div>
             </main>
 
-            <form className="input-message" onSubmit={sendMessage}>
+            <form className="input-message" onSubmit={ sendMessage }>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} >Send</button>
             </form>
