@@ -26,12 +26,16 @@ function App() {
   const [URLinput, setURLinput] = useState('')
   // auth.currentUser.photoURL is null
 
-  const changePhotoURL = async(e) => {
+  const changePhotoURL = (e) => {
     e.preventDefault()
-    const messageRef = firestore.collection('messages').where('uid', '==', auth.currentUser.uid);
-    console.log(messageRef)
-    //const query = messageRef.
-    await messageRef.update({ photoURL: URLinput})
+    const ref = firestore.collection('messages')
+    
+    firestore.collection('messages').where('uid', '==', auth.currentUser.uid).get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+          ref.doc(doc.id).update({photoURL: URLinput})
+      });
+    }).catch(e => console.log(e))
     setChangePhoto(false)
   }
 

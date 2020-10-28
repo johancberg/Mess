@@ -22,7 +22,6 @@ const ChatRoom = ({ auth, firestore }) => {
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid, photoURL, displayName } = auth.currentUser;
-        console.log(auth.currentUser)
         await messageRef.add({
             name: displayName,
             text: formValue,
