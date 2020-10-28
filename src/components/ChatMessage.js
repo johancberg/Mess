@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { format } from "date-fns";
 
 // Firebase imports
-import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
