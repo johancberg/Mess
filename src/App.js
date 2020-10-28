@@ -23,11 +23,16 @@ const firestore = firebase.firestore();
 function App() {
   const [user] = useAuthState(auth);
   const [changePhoto, setChangePhoto] = useState(false)
-  const [URLinput, setURLinput] = useState(auth.currentUser.photoURL)
+  const [URLinput, setURLinput] = useState('')
+  // auth.currentUser.photoURL is null
 
-  const changePhotoURL = (newURL) => {
-    const messageRef = firestore.collection('messages');
+  const changePhotoURL = async(e) => {
+    e.preventDefault()
+    const messageRef = firestore.collection('messages').where('uid', '==', auth.currentUser.uid);
+    console.log(messageRef)
     //const query = messageRef.
+    await messageRef.update({ photoURL: URLinput})
+    setChangePhoto(false)
   }
 
   return (
@@ -40,11 +45,11 @@ function App() {
 
       { auth.currentUser && changePhoto && <div className="dropdownBlocker" onClick={() => setChangePhoto(!changePhoto)}></div>}
       { auth.currentUser && changePhoto &&
-          <div className="option-photo">
-              <form className="settings" onSubmit={changePhotoURL(URLinput)}>
+          <div className="option-photo" onSubmit={changePhotoURL}>
+              <form className="settings">
                   <div><label>Photo URL</label>
-                  <input type="text" onChange={setURLinput} value={URLinput}></input></div>
-                  <div className="save-button"><button onClick={changePhotoURL(URLinput)}>Save</button></div>
+                  <input type="text" onChange={e => setURLinput(e.target.value)} value={URLinput}></input></div>
+                  <div className="save-button"><button onClick={changePhotoURL}>Save</button></div>
               </form>
           </div>
       }

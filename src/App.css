@@ -123,7 +123,7 @@ button:hover {
 .dropdownMenu {
   position: absolute;
   width: 13em;
-  padding: 0.6em 0.3em;
+  padding: 0.2em 0.3em;
   transform: translateX(-80%);
   background-color: rgb(56, 56, 103);
   z-index: 3;
