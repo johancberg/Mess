@@ -34,6 +34,7 @@ function App() {
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
           ref.doc(doc.id).update({photoURL: URLinput})
+          auth.currentUser.updateProfile({photoURL: URLinput})
       });
     }).catch(e => console.log(e))
     setChangePhoto(false)

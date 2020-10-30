@@ -11,7 +11,6 @@ import 'firebase/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const ChatRoom = ({ auth, firestore }) => {
-    
     const scroll = useRef();
     const messageRef = firestore.collection('messages'); 
     const query = messageRef.orderBy('createdAt').limit(25);
@@ -27,7 +26,7 @@ const ChatRoom = ({ auth, firestore }) => {
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             uid,
-            photoURL
+            photoURL: auth.currentUser.photoURL
         });
         setFormValue('');
         scroll.current.scrollIntoView({behavior: 'smooth' });
