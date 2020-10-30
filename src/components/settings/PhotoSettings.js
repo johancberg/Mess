@@ -8,7 +8,7 @@ const PhotoSettings = ({auth, firestore, setChangePhoto}) => {
       e.preventDefault()
       const ref = firestore.collection('messages')
       
-      firestore.collection('messages').where('uid', '==', auth.currentUser.uid).get()
+      ref.where('uid', '==', auth.currentUser.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
             ref.doc(doc.id).update({photoURL: URLinput})
