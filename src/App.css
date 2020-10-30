@@ -151,9 +151,9 @@ button:hover {
 
 .option-photo {
   position: absolute;
-  top: 50%;
+  top: 50vh;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-60%);
   padding: 1.3em;
   background-color: rgb(56, 56, 103);
   z-index: 3;

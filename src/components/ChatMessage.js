@@ -29,7 +29,7 @@ const ChatMessage = ({ auth, message }) => {
 
     return (
         <div className={`message ${messageClass}`}>
-            <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt="profile"/>
+            <img src={photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
             <div className="message-info">
                 <p onClick={ () => setToggleHide(!toggleHide) }>{text}</p>
                 <h6 className={ toggleHide ? `${messageClass}` : `hide ${messageClass}` }>
