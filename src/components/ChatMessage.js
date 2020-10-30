@@ -6,7 +6,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const ChatMessage = ({ auth, message }) => {
-    const { name, text, uid, photoURL, createdAt } = message;
+    const { displayName, text, uid, photoURL, createdAt } = message;
     const messageClass = (uid === auth.currentUser.uid ? 'sent' : 'received');
     const [toggleHide, setToggleHide] = useState(false)
 
@@ -33,7 +33,7 @@ const ChatMessage = ({ auth, message }) => {
             <div className="message-info">
                 <p onClick={ () => setToggleHide(!toggleHide) }>{text}</p>
                 <h6 className={ toggleHide ? `${messageClass}` : `hide ${messageClass}` }>
-                    <span>{name} </span>
+                    <span>{displayName} </span>
                     <span>{timeDate}</span>
                 </h6>
             </div>

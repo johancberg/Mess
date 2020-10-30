@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 const PhotoSettings = ({auth, firestore, setChangePhoto}) => {
-    const [URLinput, setURLinput] = useState('')
+    const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
     // auth.currentUser.photoURL is null
   
     const changePhotoURL = (e) => {

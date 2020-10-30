@@ -22,7 +22,7 @@ const ChatRoom = ({ auth, firestore }) => {
         e.preventDefault();
         const { uid, displayName } = auth.currentUser;
         await messageRef.add({
-            name: displayName,
+            displayName: displayName,
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             uid,
