@@ -6,7 +6,8 @@ import './fontawesome/css/all.css';
 import ChatRoom from './components/ChatRoom'
 import SignIn from './components/SignIn'
 import ApiKey from './components/ApiKey'
-import Options from './components/Options'
+import Options from './components/settings/Options'
+import PhotoSettings from './components/settings/PhotoSettings'
 
 // Firebase imports
 import firebase from 'firebase/app';
@@ -23,22 +24,6 @@ const firestore = firebase.firestore();
 function App() {
   const [user] = useAuthState(auth);
   const [changePhoto, setChangePhoto] = useState(false)
-  const [URLinput, setURLinput] = useState('')
-  // auth.currentUser.photoURL is null
-
-  const changePhotoURL = (e) => {
-    e.preventDefault()
-    const ref = firestore.collection('messages')
-    
-    firestore.collection('messages').where('uid', '==', auth.currentUser.uid).get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-          ref.doc(doc.id).update({photoURL: URLinput})
-          auth.currentUser.updateProfile({photoURL: URLinput})
-      });
-    }).catch(e => console.log(e))
-    setChangePhoto(false)
-  }
 
   return (
     <div className="App">
@@ -50,13 +35,7 @@ function App() {
 
       { auth.currentUser && changePhoto && <div className="dropdownBlocker" onClick={() => setChangePhoto(!changePhoto)}></div>}
       { auth.currentUser && changePhoto &&
-          <div className="option-photo" onSubmit={changePhotoURL}>
-              <form className="settings">
-                  <div><label>Photo URL</label>
-                  <input type="text" onChange={e => setURLinput(e.target.value)} value={URLinput}></input></div>
-                  <div className="save-button"><button onClick={changePhotoURL}>Save</button></div>
-              </form>
-          </div>
+          <PhotoSettings auth={auth} firestore={firestore} setChangePhoto={() => setChangePhoto} />
       }
     </div>
   );
