@@ -82,7 +82,7 @@ h6 {
 }
 
 .message {
-  margin: 9px 0 6px;
+  margin: 0 0 0.4em;
   display: flex;
   align-items: center;
   transition: all 0.5s ease;
