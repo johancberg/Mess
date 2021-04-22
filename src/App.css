@@ -276,6 +276,23 @@ p {
 .reply {
   color: white;
   margin: auto 10px;
+  cursor: pointer;
+}
+
+.reply-message {
+  position: fixed;
+  width: 100%;
+  bottom: 50px;
+  margin-bottom: auto;
+  background-color: #111318;
+}
+
+.reply-exit {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: white;
+  cursor: pointer;
 }
 
 .message-info {

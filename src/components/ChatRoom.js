@@ -17,6 +17,7 @@ const ChatRoom = ({ auth, firestore }) => {
     const [messages] = useCollectionData(query, {idField : 'id'});
     
     const [formValue, setFormValue] = useState('');
+    const [reply, setReply] = useState(false);
 
     const sendMessage = async(e) => {
         e.preventDefault();
@@ -35,10 +36,14 @@ const ChatRoom = ({ auth, firestore }) => {
     return (
         <>
             <main className="message-box">
-                { messages && messages.map(msg => <ChatMessage auth={auth} key={msg.id} message={msg} />)}
+                { messages && messages.map(msg => <ChatMessage auth={auth} key={msg.id} message={msg} setReply={setReply} />)}
                 <div ref={scroll}></div>
             </main>
 
+            <div className={ reply ? "reply-message" : "hide reply-message" }>
+                <h2>Function will come</h2>
+                <div onClick={() => setReply(false)} className="reply-exit"><i class="fas fa-times"></i></div>
+            </div>
             <form className="input-message" onSubmit={ sendMessage }>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} ><i className="fas fa-paper-plane"></i></button>

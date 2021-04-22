@@ -5,14 +5,10 @@ import { format } from "date-fns";
 import 'firebase/firestore';
 import 'firebase/auth';
 
-const ChatMessage = ({ auth, message }) => {
+const ChatMessage = ({ auth, message, setReply }) => {
     const { displayName, text, uid, photoURL, createdAt } = message;
     const messageClass = (uid === auth.currentUser.uid ? 'sent' : 'received');
     const [toggleHide, setToggleHide] = useState(false)
-
-    const handleReplies = () => {
-        alert("Function will come")
-    }
 
     const toDateTime = (time) => { // This runs twice per click, why?
         if (createdAt === null) {
@@ -42,7 +38,7 @@ const ChatMessage = ({ auth, message }) => {
                 </h6>
             </div>
             <div className={ toggleHide ? `${messageClass} reply` : `hide ${messageClass} reply` }>
-                <i onClick={() => handleReplies()} className="fas fa-reply"></i>
+                <i onClick={() => setReply(true)} className="fas fa-reply"></i>
             </div>
         </div>
     )
