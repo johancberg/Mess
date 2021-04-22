@@ -38,7 +38,7 @@ const ChatMessage = ({ auth, message, setReply }) => {
                 </h6>
             </div>
             <div className={ toggleHide ? `${messageClass} reply` : `hide ${messageClass} reply` }>
-                <i onClick={() => setReply(true)} className="fas fa-reply"></i>
+                <i onClick={() => setReply({message})} className="fas fa-reply"></i>
             </div>
         </div>
     )

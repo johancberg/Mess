@@ -40,10 +40,12 @@ const ChatRoom = ({ auth, firestore }) => {
                 <div ref={scroll}></div>
             </main>
 
-            <div className={ reply ? "reply-message" : "hide reply-message" }>
-                <h2>Function will come</h2>
-                <div onClick={() => setReply(false)} className="reply-exit"><i class="fas fa-times"></i></div>
-            </div>
+            { reply.message &&
+                <div className={ reply.message ? "reply-field" : "hide reply-field" }>
+                    <h3 className="reply-message">Reply to: "{ reply.message.text }"</h3>
+                    <div onClick={() => setReply(false)} className="reply-exit"><i className="fas fa-times"></i></div>
+                </div>
+            }
             <form className="input-message" onSubmit={ sendMessage }>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} ><i className="fas fa-paper-plane"></i></button>

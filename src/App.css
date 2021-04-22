@@ -279,12 +279,16 @@ p {
   cursor: pointer;
 }
 
-.reply-message {
+.reply-field {
   position: fixed;
   width: 100%;
   bottom: 50px;
   margin-bottom: auto;
   background-color: #111318;
+}
+
+.reply-message {
+  font-weight: 300;
 }
 
 .reply-exit {
