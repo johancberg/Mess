@@ -273,6 +273,11 @@ p {
   text-align: center;
 }
 
+.reply {
+  color: white;
+  margin: auto 10px;
+}
+
 .message-info {
   display: flex;
   flex-direction: column;

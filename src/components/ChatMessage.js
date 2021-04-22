@@ -10,6 +10,10 @@ const ChatMessage = ({ auth, message }) => {
     const messageClass = (uid === auth.currentUser.uid ? 'sent' : 'received');
     const [toggleHide, setToggleHide] = useState(false)
 
+    const handleReplies = () => {
+        alert("Function will come")
+    }
+
     const toDateTime = (time) => { // This runs twice per click, why?
         if (createdAt === null) {
             return format(Date.now(), "H:mm d MMM");
@@ -36,6 +40,9 @@ const ChatMessage = ({ auth, message }) => {
                     <span>{displayName} </span>
                     <span>{timeDate}</span>
                 </h6>
+            </div>
+            <div className={ toggleHide ? `${messageClass} reply` : `hide ${messageClass} reply` }>
+                <i onClick={() => handleReplies()} className="fas fa-reply"></i>
             </div>
         </div>
     )
