@@ -28,11 +28,11 @@ const ChatMessage = ({ auth, message, setReply }) => {
     const timeDate = toDateTime(createdAt)
 
     return (
-        <>
+        <div className="message-content">
             { replyText &&
-            <div className={`message ${messageClass}`}>
-                <h6>Reply from {replyName}</h6>
-                <div><p>{replyText}</p></div>
+            <div className={`reply-message ${messageClass}`}>
+                <h6 className={`${messageClass}`}>Reply {replyName && `from ${replyName}`}</h6>
+                <p className="reply-text">{replyText}</p>
             </div>
             }
             <div className={`message ${messageClass}`}>
@@ -48,7 +48,7 @@ const ChatMessage = ({ auth, message, setReply }) => {
                     <i onClick={() => setReply({message})} className="fas fa-reply"></i>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

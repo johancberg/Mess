@@ -82,7 +82,6 @@ h6 {
 }
 
 .message {
-  margin: 0 0 0.4em;
   display: flex;
   align-items: center;
   transition: all 0.5s ease;
@@ -273,6 +272,10 @@ p {
   text-align: center;
 }
 
+.message-content {
+  margin: 0 0 0.4em;
+}
+
 .reply {
   color: white;
   margin: auto 10px;
@@ -292,9 +295,10 @@ p {
 }
 
 .reply-message {
+  top: 8px;
   margin: 0;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   transition: all 0.5s ease;
 }
@@ -305,6 +309,21 @@ p {
 
 .reply-message .sent {
   text-align: end;
+}
+
+.reply-text {
+  font-size: 12px;
+  line-height: 16px;
+  padding: 8px 16px;
+}
+
+.received .reply-text {
+  background: #bcbcc0;
+}
+
+.sent .reply-text {
+  background: #b9e8f7;
+  color: black
 }
 
 .reply-exit {
