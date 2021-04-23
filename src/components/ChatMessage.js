@@ -6,7 +6,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const ChatMessage = ({ auth, message, setReply }) => {
-    const { displayName, text, uid, photoURL, createdAt } = message;
+    const { displayName, text, replyText, replyName, uid, photoURL, createdAt } = message;
     const messageClass = (uid === auth.currentUser.uid ? 'sent' : 'received');
     const [toggleHide, setToggleHide] = useState(false)
 
@@ -28,19 +28,27 @@ const ChatMessage = ({ auth, message, setReply }) => {
     const timeDate = toDateTime(createdAt)
 
     return (
-        <div className={`message ${messageClass}`}>
-            <img src={photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
-            <div className="message-info">
-                <p onClick={ () => setToggleHide(!toggleHide) }>{text}</p>
-                <h6 className={ toggleHide ? `${messageClass}` : `hide ${messageClass}` }>
-                    <span>{displayName} </span>
-                    <span>{timeDate}</span>
-                </h6>
+        <>
+            { replyText &&
+            <div className={`message ${messageClass}`}>
+                <h6>Reply from {replyName}</h6>
+                <div><p>{replyText}</p></div>
             </div>
-            <div className={ toggleHide ? `${messageClass} reply` : `hide ${messageClass} reply` }>
-                <i onClick={() => setReply({message})} className="fas fa-reply"></i>
+            }
+            <div className={`message ${messageClass}`}>
+                <img src={photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
+                <div className="message-info">
+                    <p onClick={ () => setToggleHide(!toggleHide) }>{text}</p>
+                    <h6 className={ toggleHide ? `${messageClass}` : `hide ${messageClass}` }>
+                        <span>{displayName} </span>
+                        <span>{timeDate}</span>
+                    </h6>
+                </div>
+                <div className={ toggleHide ? `${messageClass} reply` : `hide ${messageClass} reply` }>
+                    <i onClick={() => setReply({message})} className="fas fa-reply"></i>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

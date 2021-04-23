@@ -20,15 +20,28 @@ const ChatRoom = ({ auth, firestore }) => {
     const [reply, setReply] = useState(false);
 
     const sendMessage = async(e) => {
-        e.preventDefault();
+        e.preventDefault();            
         const { uid, displayName } = auth.currentUser;
-        await messageRef.add({
-            displayName: displayName,
-            text: formValue,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            uid,
-            photoURL: auth.currentUser.photoURL
-        });
+        if (reply.message) {
+            await messageRef.add({
+                displayName: displayName,
+                text: formValue,
+                replyText: reply.message.text,
+                replyName: reply.message.displayName,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                uid,
+                photoURL: auth.currentUser.photoURL
+            }).then(() => setReply(false));
+            
+        } else {
+            await messageRef.add({
+                displayName: displayName,
+                text: formValue,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                uid,
+                photoURL: auth.currentUser.photoURL
+            });
+        }
         setFormValue('');
         scroll.current.scrollIntoView({behavior: 'smooth' });
     }
@@ -41,8 +54,8 @@ const ChatRoom = ({ auth, firestore }) => {
             </main>
 
             { reply.message &&
-                <div className={ reply.message ? "reply-field" : "hide reply-field" }>
-                    <h3 className="reply-message">Reply to: "{ reply.message.text }"</h3>
+                <div className="reply-field">
+                    <h3>Reply to: "{ reply.message.text }"</h3>
                     <div onClick={() => setReply(false)} className="reply-exit"><i className="fas fa-times"></i></div>
                 </div>
             }
