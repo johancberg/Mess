@@ -35,7 +35,7 @@ const ChatMessage = ({ auth, message, setReply }) => {
                 <p className="reply-text">{replyText}</p>
             </div>
             }
-            <div className={`message ${messageClass}`}>
+            <div onMouseEnter={() => setToggleHide(true)} onMouseLeave={() => setToggleHide(false)} className={`message ${messageClass}`}>
                 <img src={photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
                 <div className="message-info">
                     <p onClick={ () => setToggleHide(!toggleHide) }>{text}</p>
