@@ -25,10 +25,6 @@ body {
   background: #555;
 }
 
-.App {
-  text-align: center;
-}
-
 .App-header {
   position: fixed;
   width: 100%;
@@ -41,10 +37,6 @@ body {
   border-bottom: #111318 0.03em solid;
   min-height: 10vh;
   z-index: 5;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 .hide {
@@ -197,6 +189,10 @@ button:hover {
 .signin-form {
   display: flex;
   flex-direction: column;
+}
+
+.signin-form h2 {
+  text-align: center;
 }
 
 .signin-form div {
@@ -379,13 +375,4 @@ p {
   height: 40px;
   border-radius: 50%;
   margin: 9px 5px;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
