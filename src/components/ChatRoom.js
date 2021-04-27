@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 
 // Components
 import ChatMessage from './ChatMessage';
@@ -18,6 +18,11 @@ const ChatRoom = ({ auth, firestore }) => {
     
     const [formValue, setFormValue] = useState('');
     const [reply, setReply] = useState(false);
+
+    const scrollToBottom = () => {
+        console.log("Try this")
+        window.scrollTo(0, document.body.scrollHeight);
+    }
 
     const sendMessage = async(e) => {
         e.preventDefault();            
@@ -45,6 +50,10 @@ const ChatRoom = ({ auth, firestore }) => {
         setFormValue('');
         scroll.current.scrollIntoView({behavior: 'smooth' });
     }
+
+    useEffect(() => {
+        window.onload = scrollToBottom()
+    }, [messages])
 
     return (
         <>
