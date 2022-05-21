@@ -6,8 +6,7 @@ const PasswordInput = ({ label, stateType, value, passFunction }) => {
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            //Fix this please...
-            passFunction()
+            passFunction(e)
         }
     } 
 
