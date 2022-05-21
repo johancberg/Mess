@@ -33,7 +33,7 @@ function App() {
         <h1>Mess</h1>
         { auth.currentUser && <Options auth={auth} setChangePhoto={setChangePhoto} setChangeName={setChangeName} /> }
       </header>
-      { user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} /> }
+      { user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
 
       { auth.currentUser && (changePhoto || changeName) && <div className="dropdownBlocker" onClick={() => {setChangePhoto(false); setChangeName(false)}}></div>}
       { auth.currentUser && changeName &&

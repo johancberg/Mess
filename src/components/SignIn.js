@@ -8,11 +8,13 @@ import 'firebase/auth';
 //Components
 import PasswordInput from './PasswordInput';
 
-const SignIn = ({ auth }) => {
+const SignIn = ({ auth, firestore }) => {
     const [ registerPage, setRegisterPage ] = useState(false)
     const [ stateEmail, setStateEmail] = useState('')
     const [ statePassword, setStatePassword] = useState('')
     const [ stateRewritePassword, setStateRewritePassword] = useState('')
+
+    const userRef = firestore.collection('users'); 
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -21,7 +23,7 @@ const SignIn = ({ auth }) => {
     }
 
     // Gets executed when use logs in or register using email and password
-    const signInWithPassword = e => {
+    const signInWithPassword = async (e) => {
         e.preventDefault()
         const email = stateEmail
         const password = statePassword
@@ -33,17 +35,26 @@ const SignIn = ({ auth }) => {
             } else if (password.length < 6) {
                 alert('Error: The password has to be 6 characters or longer.')
             } else {
-                auth.createUserWithEmailAndPassword(email, password)
-                .catch(error => alert(error))
+                try {
+                    await auth.createUserWithEmailAndPassword(email, password)
+                    .then(async () => {
+                        await userRef.add({
+                            displayName: "",
+                            uid : auth.currentUser.uid,
+                            verified: false
+                        })
+                    })
+                }
+                catch(error) { alert(error) }
             }
         } else {
             //Login
-            auth.signInWithEmailAndPassword(email, password)
+            await auth.signInWithEmailAndPassword(email, password)
             .catch(error => alert(error))
         }
     }
 
-    function resetForm(condition) {
+    const resetForm = (condition) => {
         setRegisterPage(condition)
         setStateEmail('')
         setStatePassword('')
