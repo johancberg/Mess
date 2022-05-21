@@ -10,11 +10,10 @@ import PasswordInput from './PasswordInput';
 
 const SignIn = ({ auth, firestore }) => {
     const [ registerPage, setRegisterPage ] = useState(false)
+    const [ stateName, setStateName] = useState('')
     const [ stateEmail, setStateEmail] = useState('')
     const [ statePassword, setStatePassword] = useState('')
     const [ stateRewritePassword, setStateRewritePassword] = useState('')
-
-    const userRef = firestore.collection('users'); 
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -37,10 +36,10 @@ const SignIn = ({ auth, firestore }) => {
             } else {
                 try {
                     await auth.createUserWithEmailAndPassword(email, password)
-                    .then(async () => {
-                        await userRef.add({
-                            displayName: "",
-                            uid : auth.currentUser.uid,
+                    .then(async (userCredential) => {
+                        console.log(userCredential.user.uid)
+                        await firestore.collection('users').doc(userCredential.user.uid).set({
+                            displayName: stateName,
                             verified: false
                         })
                     })
@@ -65,6 +64,11 @@ const SignIn = ({ auth, firestore }) => {
         <div className="main-page">
                 <form className="signin-form">
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
+                    { registerPage &&
+                    <div><label>User Name </label>
+                        <input type="text" onChange={e => setStateName(e.target.value)} value={stateName}></input>
+                    </div>
+                    }
                     <div><label>E-mail </label>
                         <input type="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
                     </div>
