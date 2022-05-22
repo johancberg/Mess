@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Mess</h1>
-        { auth.currentUser && <Options auth={auth} setChangePhoto={setChangePhoto} setChangeName={setChangeName} /> }
+        { auth.currentUser && <Options auth={auth} firestore={firestore} setChangePhoto={setChangePhoto} setChangeName={setChangeName} /> }
       </header>
       { user ? <ChatRoom auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
 
