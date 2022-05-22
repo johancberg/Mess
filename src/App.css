@@ -130,6 +130,10 @@ button:hover {
   background-color: rgb(78, 78, 197);
 }
 
+button:focus {
+  outline: 3px solid #0b93f6;
+}
+
 .save-button {
   margin-top: 0.6em;
   text-align: end;
