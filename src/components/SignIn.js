@@ -37,7 +37,6 @@ const SignIn = ({ auth, firestore }) => {
                 try {
                     await auth.createUserWithEmailAndPassword(email, password)
                     .then(async (userCredential) => {
-                        console.log(userCredential.user.uid)
                         await firestore.collection('users').doc(userCredential.user.uid).set({
                             displayName: stateName,
                             photoURL: '',

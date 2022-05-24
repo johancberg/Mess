@@ -20,7 +20,6 @@ const ChatRoom = ({ auth, firestore }) => {
     const [reply, setReply] = useState(false);
 
     const scrollToBottom = () => {
-        console.log("Try this")
         window.scrollTo(0, document.body.scrollHeight);
     }
 
