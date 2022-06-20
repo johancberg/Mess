@@ -47,7 +47,7 @@ code {
   background-color: #191c24;
   border-bottom: #111318 0.03em solid;
   min-height: 10vh;
-  z-index: 5;
+  z-index: 2;
 }
 
 .hide {
@@ -174,7 +174,7 @@ button:focus {
   padding: 0.2em 0.3em;
   transform: translateY(5%);
   background-color: rgb(56, 56, 103);
-  z-index: 3;
+  z-index: 5;
 }
 
 .dropdownMenu Button {
@@ -188,8 +188,8 @@ button:focus {
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: transparent;
-  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 3;
 }
 
 .options .username {
