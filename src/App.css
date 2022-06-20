@@ -207,6 +207,13 @@ button:focus {
   z-index: 5;
 }
 
+.settings .option {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  margin: 0.4em 0;
+}
+
 .settings input {
   font-size: 1.2rem;
 }
