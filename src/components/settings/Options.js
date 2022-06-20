@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-const Options = ({auth, firestore, setChangePhoto, setChangeName}) => {
+const Options = ({auth, firestore, setChangePhoto, setChangeName, setChangeProfile}) => {
     const [menu, setMenu] = useState(false);
     const [data, setData] = useState({});
     
@@ -24,6 +24,7 @@ const Options = ({auth, firestore, setChangePhoto, setChangeName}) => {
             { menu && <div className="dropdownMenu">
                 <button onClick={() => {setChangeName(true); setMenu(!menu)}}>Change name</button>
                 <button onClick={() => {setChangePhoto(true); setMenu(!menu)}}>Change photo</button>
+                <button onClick={() => {setChangeProfile(true); setMenu(!menu)}}>Profile settings</button>
                 <button onClick={() => {auth.signOut(); setMenu(!menu)}}>Sign out</button>
             </div> }
         </div>
