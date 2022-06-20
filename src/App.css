@@ -164,7 +164,7 @@ button:focus {
 
 .options:hover, .options:active, .options:focus    {
   background-color: #111318;
-  border-radius: 5%;
+  border-radius: 10px;
 }
 
 .dropdownMenu {

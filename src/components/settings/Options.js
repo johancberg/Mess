@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-const Options = ({auth, firestore, setChangeProfile}) => {
+const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
     const [menu, setMenu] = useState(false);
     const [data, setData] = useState({});
 
@@ -22,6 +22,7 @@ const Options = ({auth, firestore, setChangeProfile}) => {
             { menu && <div className="dropdownBlocker" onClick={() => setMenu(!menu)}></div> }
             { menu && <div className="dropdownMenu">
                 <button onClick={() => {setChangeProfile(true); setMenu(!menu)}}>Profile settings</button>
+                <button onClick={() => {setChangeGeneral(true); setMenu(!menu)}}>General settings</button>
                 <button onClick={() => {auth.signOut(); setMenu(!menu)}}>Sign out</button>
             </div> }
         </div>

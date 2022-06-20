@@ -40,7 +40,7 @@ const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
     }
 
     return (
-        <div className="option-photo" onSubmit={changePhotoURL}>
+        <div className="option-photo" onSubmit={changeProfile}>
             <form className="settings">
                 <div className="option"><label>Name</label>
                 <input type="text" onChange={e => setNameinput(e.target.value)} value={nameInput}></input></div>
