@@ -3,16 +3,15 @@ import React, {useState, useEffect} from 'react'
 const Options = ({auth, firestore, setChangeProfile}) => {
     const [menu, setMenu] = useState(false);
     const [data, setData] = useState({});
-    
+
     useEffect(() => {
         firestore.collection("users").doc(auth.currentUser.uid).get().then((snapshot) => {
             const data = snapshot.data()
             // Loop through the data and store
             // it in array to display
-            setData(data);    
+            setData(data);
         });
     }, [auth.currentUser.uid, firestore]);
-    
 
     return (
         <div>
