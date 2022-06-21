@@ -17,7 +17,7 @@ body {
   }
   
   body[data-theme*=light] {
-    background-color: #ffffff;
+    background-color: var(--white-color);
   }
   
   code {
@@ -110,8 +110,10 @@ body {
   body[data-theme*=dark] h3,
   body[data-theme*=dark] h4,
   body[data-theme*=dark] h5,
-  body[data-theme*=dark] h6 {
-    color: #FFF;
+  body[data-theme*=dark] h6,
+  body[data-theme*=dark] label, 
+  body[data-theme*=dark] p {
+    color: var(--white-color);
   }
   
   body[data-theme*=light] h1,
@@ -119,8 +121,10 @@ body {
   body[data-theme*=light] h3,
   body[data-theme*=light] h4,
   body[data-theme*=light] h5,
-  body[data-theme*=light] h6 {
-    color: #000;
+  body[data-theme*=light] h6,
+  body[data-theme*=light] label, 
+  body[data-theme*=light] p {
+    color: var(--black-color);
   }
   
   .message {
@@ -287,13 +291,7 @@ body {
   
   label {
     font-size: 1.3rem;
-    color: white;
     margin-right: 1em;
-  }
-  
-  body[data-theme*=light] label, 
-  body[data-theme*=light] p {
-    color: black;
   }
   
   .signin-form div input {
@@ -308,22 +306,22 @@ body {
   
   .sign-in:hover {
     color: #282c34;
-    background-color: white;
+    background-color: var(--white-color);
   }
   
   .sign-in.google {
-    color: white;
+    color: var(--white-color);
     background-color: #db4437;
     transition: background-color 0.3s ease;
   }
   
   .sign-in.google:hover {
     color: #db4437;
-    background-color: white;
+    background-color: var(--white-color);
   }
   
   .switch-login {
-    color: white;
+    color: var(--white-color);
   }
   
   .switch-login p {
@@ -348,7 +346,6 @@ body {
     margin: 0;
     border-radius: 25px;
     position: relative;
-    color: white;
     text-align: center;
   }
   
@@ -357,7 +354,7 @@ body {
   }
   
   .reply {
-    color: white;
+    color: var(--white-color);
     margin: auto 10px;
     cursor: pointer;
   }
@@ -403,14 +400,14 @@ body {
   
   .sent .reply-text {
     background: #b9e8f7;
-    color: black
+    color: var(--black-color)
   }
   
   .reply-exit {
     position: absolute;
     top: 5px;
     right: 5px;
-    color: white;
+    color: var(--white-color);
     cursor: pointer;
   }
   
@@ -441,7 +438,7 @@ body {
   }
   
   .sent p {
-    color: white;
+    color: var(--white-color);
     background: #0b93f6;
     align-self: flex-end;
     text-align: left;
@@ -449,7 +446,7 @@ body {
   
   .received p {
     background: #e5e5ea;
-    color: black;
+    color: var(--black-color);
     align-self: flex-start;
     text-align: left;
   }
