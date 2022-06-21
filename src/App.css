@@ -10,6 +10,14 @@ body {
   background-color: #282c34;
 }
 
+body[data-theme*=dark] {
+  background-color: #282c34;
+}
+
+body[data-theme*=light] {
+  background-color: #ffffff;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -48,6 +56,18 @@ code {
   border-bottom: #111318 0.03em solid;
   min-height: 10vh;
   z-index: 2;
+}
+
+body[data-theme*=dark] .App-header {
+  color: white !important;
+  background-color: #191c24 !important;
+  transition: all 0.2s linear;
+}
+
+body[data-theme*=light] .App-header {
+  color: black !important;
+  background-color: #CCCCCC !important;
+  transition: all 0.2s linear;
 }
 
 .hide {

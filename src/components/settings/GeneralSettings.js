@@ -6,8 +6,10 @@ const PhotoSettings = ({auth, firestore, setChangeGeneral}) => {
     useEffect(() => {
         if (colorInput) {
             localStorage.setItem("mess-theme", "light")
+            document.body.setAttribute('data-theme', 'light')
         } else {
             localStorage.setItem("mess-theme", "dark")
+            document.body.setAttribute('data-theme', 'dark')
         }
     }, [colorInput])
 
