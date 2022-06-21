@@ -27,7 +27,7 @@ const PhotoSettings = ({auth, firestore, setChangeGeneral}) => {
                         <input type="radio" onClick={() => setColorinput(true)} checked={colorInput} name="color"></input><label>Light</label>
                     </div>
                 </div>
-                <div className="save-button"><button onClick={changeSettings}>Save</button></div>
+                <div className="save-button"><button onClick={changeSettings}>Close</button></div>
             </form>
         </div>
     )

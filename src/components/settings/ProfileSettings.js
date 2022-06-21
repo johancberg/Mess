@@ -3,40 +3,49 @@ import React, {useState} from 'react'
 const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
     const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
     const [nameInput, setNameinput] = useState(auth.currentUser.displayName || '')
+    const messageRef = firestore.collection('messages')
+    const userRef = firestore.collection('users')
   
     
     // auth.currentUser.photoURL is null
   
     const changePhotoURL = () => {
-      const ref = firestore.collection('messages')
-      
-      ref.where('uid', '==', auth.currentUser.uid).get()
+      messageRef.where('uid', '==', auth.currentUser.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-            ref.doc(doc.id).update({photoURL: URLinput})
+          messageRef.doc(doc.id).update({photoURL: URLinput})
             auth.currentUser.updateProfile({photoURL: URLinput})
         });
       }).catch(e => console.log(e))
-      setChangeProfile(false)
+
+      userRef.doc(auth.currentUser.uid).update({
+        photoURL: URLinput
+      })
     }
 
     const changeName = () => {
-      const ref = firestore.collection('messages')
-      
-      ref.where('uid', '==', auth.currentUser.uid).get()
+      messageRef.where('uid', '==', auth.currentUser.uid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-            ref.doc(doc.id).update({displayName: nameInput})
+          messageRef.doc(doc.id).update({displayName: nameInput})
             auth.currentUser.updateProfile({displayName: nameInput})
         });
       }).catch(e => console.log(e))
-      setChangeProfile(false)
+
+      userRef.doc(auth.currentUser.uid).update({
+        displayName: nameInput
+      })
     }
 
     const changeProfile = (e) => {
         e.preventDefault()
-        changePhotoURL()
-        changeName()
+        if (auth.currentUser.photoURL !== URLinput) {
+          changePhotoURL()
+        }
+        if (auth.currentUser.displayName !== nameInput) {
+          changeName()
+        }
+        setChangeProfile(false)
     }
 
     return (
