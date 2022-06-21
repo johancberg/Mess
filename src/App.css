@@ -96,13 +96,29 @@ h2 {
 h2, h3, h4, h5 {
   margin-top: 0.1em;
   margin-bottom: 0.5em;
-  color: #FFF;
 }
 
 h6 {
   margin: 0;
-  color: #FFF;
   width: 100%;
+}
+
+body[data-theme*=dark] h1,
+body[data-theme*=dark] h2,
+body[data-theme*=dark] h3,
+body[data-theme*=dark] h4,
+body[data-theme*=dark] h5,
+body[data-theme*=dark] h6 {
+  color: #FFF;
+}
+
+body[data-theme*=light] h1,
+body[data-theme*=light] h2,
+body[data-theme*=light] h3,
+body[data-theme*=light] h4,
+body[data-theme*=light] h5,
+body[data-theme*=light] h6 {
+  color: #000;
 }
 
 .message {
