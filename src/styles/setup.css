@@ -12,14 +12,6 @@ body {
     background-color: #282c34;
   }
   
-  body[data-theme*=dark] {
-    background-color: #282c34;
-  }
-  
-  body[data-theme*=light] {
-    background-color: var(--white-color);
-  }
-  
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
@@ -105,28 +97,6 @@ body {
     width: 100%;
   }
   
-  body[data-theme*=dark] h1,
-  body[data-theme*=dark] h2,
-  body[data-theme*=dark] h3,
-  body[data-theme*=dark] h4,
-  body[data-theme*=dark] h5,
-  body[data-theme*=dark] h6,
-  body[data-theme*=dark] label, 
-  body[data-theme*=dark] p {
-    color: var(--white-color);
-  }
-  
-  body[data-theme*=light] h1,
-  body[data-theme*=light] h2,
-  body[data-theme*=light] h3,
-  body[data-theme*=light] h4,
-  body[data-theme*=light] h5,
-  body[data-theme*=light] h6,
-  body[data-theme*=light] label, 
-  body[data-theme*=light] p {
-    color: var(--black-color);
-  }
-  
   .message {
     display: flex;
     align-items: center;
@@ -204,14 +174,8 @@ body {
     top: 50%;
     transform: translateY(-50%);
   }
-  
-  body[data-theme*=dark] .options:hover, .options:active, .options:focus {
-    background-color: #111318;
-    border-radius: 10px;
-  }
-  
-  body[data-theme*=light] .options:hover, .options:active, .options:focus {
-    background-color: #b4b7be;
+
+  .options:hover, .options:active, .options:focus {
     border-radius: 10px;
   }
   
@@ -462,4 +426,42 @@ body {
     width: 70px;
     height: 70px;
     border-radius: 50%;
+  }
+
+  /* COLOUR THEMES */
+  
+  body[data-theme*=dark] {
+    background-color: #282c34;
+  }
+  
+  body[data-theme*=light] {
+    background-color: var(--white-color);
+  }
+  
+  body[data-theme*=dark] h1,
+  body[data-theme*=dark] h2,
+  body[data-theme*=dark] h3,
+  body[data-theme*=dark] h4,
+  body[data-theme*=dark] h5,
+  body[data-theme*=dark] h6,
+  body[data-theme*=dark] label {
+    color: var(--white-color);
+  }
+  
+  body[data-theme*=light] h1,
+  body[data-theme*=light] h2,
+  body[data-theme*=light] h3,
+  body[data-theme*=light] h4,
+  body[data-theme*=light] h5,
+  body[data-theme*=light] h6,
+  body[data-theme*=light] label {
+    color: var(--black-color);
+  }
+  
+  body[data-theme*=dark] .options:hover, .options:active, .options:focus {
+    background-color: #111318;
+  }
+  
+  body[data-theme*=light] .options:hover, .options:active, .options:focus {
+    background-color: #b4b7be;
   }
