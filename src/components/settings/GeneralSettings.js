@@ -1,18 +1,30 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 const PhotoSettings = ({auth, firestore, setChangeGeneral}) => {
-    const [colorInput, setColorinput] = useState(false);
+    const [colorInput, setColorinput] = useState( localStorage.getItem("mess-theme") === "light" ? true : false );
+
+    useEffect(() => {
+        if (colorInput) {
+            localStorage.setItem("mess-theme", "light")
+        } else {
+            localStorage.setItem("mess-theme", "dark")
+        }
+    }, [colorInput])
 
     const changeSettings = (e) => {
         e.preventDefault()
-
+        setChangeGeneral(false)
     }
 
     return (
         <div className="option-photo" onSubmit={changeSettings}>
             <form className="settings">
                 <div className="option"><label>UI Color</label>
-                <input type="radio" onClick={() => setColorinput(!colorInput)} value={colorInput}></input></div>
+                    <div>
+                        <input type="radio" onClick={() => setColorinput(false)} checked={!colorInput} name="color"></input><label>Dark</label>
+                        <input type="radio" onClick={() => setColorinput(true)} checked={colorInput} name="color"></input><label>Light</label>
+                    </div>
+                </div>
                 <div className="save-button"><button onClick={changeSettings}>Save</button></div>
             </form>
         </div>
