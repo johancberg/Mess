@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import './fontawesome/css/all.css';
 
@@ -26,6 +26,15 @@ function App() {
   const [user] = useAuthState(auth);
   const [changeProfile, setChangeProfile] = useState(false)
   const [changeGeneral, setChangeGeneral] = useState(false)
+
+  useEffect(() => {
+    if (!localStorage.getItem('mess-theme')) {
+      document.body.setAttribute('data-theme', 'dark')
+    } else {
+      const value = localStorage.getItem('mess-theme')
+      document.body.setAttribute('data-theme', value === 'dark' ? 'dark' : 'light')
+    }
+  }, [])
 
   return (
     <div className="App">
