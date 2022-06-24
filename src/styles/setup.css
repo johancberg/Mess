@@ -444,7 +444,8 @@ body {
   body[data-theme*=dark] h4,
   body[data-theme*=dark] h5,
   body[data-theme*=dark] h6,
-  body[data-theme*=dark] label {
+  body[data-theme*=dark] label,
+  body[data-theme*=dark] .switch-login p {
     color: var(--white-color);
   }
   
@@ -454,7 +455,8 @@ body {
   body[data-theme*=light] h4,
   body[data-theme*=light] h5,
   body[data-theme*=light] h6,
-  body[data-theme*=light] label {
+  body[data-theme*=light] label,
+  body[data-theme*=light] .switch-login p {
     color: var(--black-color);
   }
   
@@ -464,4 +466,13 @@ body {
   
   body[data-theme*=light] .options:hover, .options:active, .options:focus {
     background-color: #b4b7be;
+  }
+
+  body[data-theme*=light] .option-photo {
+    background-color: var(--option-color-light);
+    transition: all 0.2s linear;
+  }
+
+  body[data-theme*=light] .signin-form div input {
+    border: var(--black-color) 1px solid;
   }

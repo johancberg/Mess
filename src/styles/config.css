@@ -1,5 +1,8 @@
 :root {
     /* COLOUR VARIABLES */
-    --white-color: rgb(255,255,255);
+    --white-color:  rgb(255,255,255);
     --black-color: rgb(000,000,000);
+
+    --option-color-dark:    rgb(56, 56, 103);
+    --option-color-light:   rgb(89, 89, 163);
 }
