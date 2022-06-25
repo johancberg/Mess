@@ -268,9 +268,13 @@ body {
     margin: 0 auto;
   }
   
-  .sign-in:hover {
+  body[data-theme*=dark] .sign-in:hover {
     color: #282c34;
     background-color: var(--white-color);
+  }
+  body[data-theme*=light] .sign-in:hover {
+    color: rgb(125, 99, 196);
+    background-color: rgb(56, 35, 115);
   }
   
   .sign-in.google {
@@ -279,9 +283,14 @@ body {
     transition: background-color 0.3s ease;
   }
   
-  .sign-in.google:hover {
+  body[data-theme*=dark] .sign-in.google:hover {
     color: #db4437;
     background-color: var(--white-color);
+  }
+  
+  body[data-theme*=light] .sign-in.google:hover {
+    color: #db4437;
+    background-color: #9b2d23;
   }
   
   .switch-login {
