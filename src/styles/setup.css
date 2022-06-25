@@ -327,7 +327,6 @@ body {
   }
   
   .reply {
-    color: var(--white-color);
     margin: auto 10px;
     cursor: pointer;
   }
@@ -337,7 +336,6 @@ body {
     width: 100%;
     bottom: 50px;
     margin-bottom: auto;
-    background-color: #111318;
   }
   
   .reply-field h3 {
@@ -484,4 +482,20 @@ body {
 
   body[data-theme*=light] .signin-form div input {
     border: var(--black-color) 1px solid;
+  }
+  
+  body[data-theme*=dark] .reply {
+    color: var(--white-color);
+  }
+
+  body[data-theme*=light] .reply {
+    color: var(--black-color);
+  }
+
+  body[data-theme*=dark] .reply-field {
+    background-color: #111318 !important;
+  }
+
+  body[data-theme*=light] .reply-field {
+    background-color: #CCCCCC !important;
   }
