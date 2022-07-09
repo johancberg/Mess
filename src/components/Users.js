@@ -5,13 +5,15 @@ import ChatRoom from './ChatRoom'
 
 const Users = ({auth, firestore}) => {
 
+    const int = 'dDUGbyYn8by65oZWuDBO'
+
     return (
         <BrowserRouter>
         <div style={{position:'relative',top:'10vh'}}>
             <h3>TESTING</h3>
-            <Link to="/chatid">Chat with Bart</Link>
+            <Link to={`c/${int}`}>Chat with Bart</Link>
             <Routes>
-                <Route exact path="/chatid" element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
+                <Route exact path={`c/${int}`} element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
             </Routes>
         </div>
         </BrowserRouter>
