@@ -3,7 +3,7 @@ import './styles/App.css';
 import './fontawesome/css/all.css';
 
 // Components
-import Users from './components/Users'
+import Main from './components/Main'
 import SignIn from './components/SignIn'
 import ApiKey from './components/ApiKey'
 import Options from './components/settings/Options'
@@ -42,7 +42,7 @@ function App() {
         <h1>Mess</h1>
         { auth.currentUser && <Options auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} setChangeGeneral={setChangeGeneral} /> }
       </header>
-      { user ? <Users auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
+      { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
 
       { auth.currentUser && (changeProfile || changeGeneral) && <div className="dropdownBlocker" onClick={() => {setChangeProfile(false); setChangeGeneral(false);}}></div>}
 

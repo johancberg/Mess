@@ -1,23 +1,13 @@
 import React from 'react'
-import {BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import ChatRoom from './ChatRoom'
-
-const Users = ({auth, firestore}) => {
-
-    const int = 'dDUGbyYn8by65oZWuDBO'
+const Users = ({ int }) => {
 
     return (
-        <BrowserRouter>
         <div style={{position:'relative',top:'10vh'}}>
-            <h3>TESTING</h3>
-            <Link to={`c/${int}`}>Chat with Bart</Link>
-            <Routes>
-                <Route exact path={`c/${int}`} element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
-            </Routes>
+            <Link to={`c/${int}`}><p style={{color:'white'}}>Chat with Bart</p></Link>
         </div>
-        </BrowserRouter>
     )
 }
 
-export default Users
+ export default Users

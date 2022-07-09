@@ -12,7 +12,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const ChatRoom = ({ auth, firestore }) => {
     const scroll = useRef();
-    const messageRef = firestore.collection('messages'); 
+    const messageRef = firestore.collection('messages');
     const query = messageRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(query, {idField : 'id'});
     
@@ -24,7 +24,7 @@ const ChatRoom = ({ auth, firestore }) => {
     }
 
     const sendMessage = async(e) => {
-        e.preventDefault();            
+        e.preventDefault();
         const { uid, displayName } = auth.currentUser;
         if (reply.message) {
             await messageRef.add({
