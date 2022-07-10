@@ -48,6 +48,11 @@ const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
         setChangeProfile(false)
     }
 
+    const deleteProfile = (e) => {
+      e.preventDefault()
+      
+    }
+
     return (
         <div className="option-photo" onSubmit={changeProfile}>
             <form className="settings">
@@ -56,7 +61,11 @@ const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
 
                 <div className="option"><label>Photo URL</label>
                 <input type="text" onChange={e => setURLinput(e.target.value)} value={URLinput}></input></div>
-                <div className="save-button"><button onClick={changeProfile}>Save</button></div>
+
+                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                  <div className='warning-button'><button onClick={deleteProfile}>Delete user</button></div>
+                  <div className="save-button"><button onClick={changeProfile}>Save</button></div>
+                </div>
             </form>
         </div>
     )

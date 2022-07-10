@@ -158,8 +158,18 @@ body {
   button:focus {
     outline: 3px solid #0b93f6;
   }
+
+  .warning-button button {
+    background-color: rgb(143, 56, 56);
+    text-align: start;
+  }
+
+  .warning-button button:hover {
+    background-color: rgb(197, 78, 78);
+    text-align: start;
+  }
   
-  .save-button {
+  .save-button, .warning-button {
     margin-top: 0.6em;
     text-align: end;
   }
