@@ -50,7 +50,7 @@ const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
 
     const deleteProfile = (e) => {
       e.preventDefault()
-      
+      auth.currentUser.delete()
     }
 
     return (
