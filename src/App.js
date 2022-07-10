@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Link } from 'react-router-dom';
 import './styles/App.css';
 import './fontawesome/css/all.css';
 
@@ -37,9 +38,10 @@ function App() {
   }, [])
 
   return (
+    <BrowserRouter>
     <div className="App">
       <header className="App-header">
-        <h1>Mess</h1>
+        <Link to="/"><h1>Mess</h1></Link>
         { auth.currentUser && <Options auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} setChangeGeneral={setChangeGeneral} /> }
       </header>
       { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
@@ -53,6 +55,7 @@ function App() {
           <GeneralSettings auth={auth} firestore={firestore} setChangeGeneral={setChangeGeneral} />
       }
     </div>
+    </BrowserRouter>
   );
 }
 

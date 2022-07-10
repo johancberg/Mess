@@ -78,6 +78,15 @@ body {
     align-items: center;
     justify-content: center;
   }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover, a:active {
+    text-decoration: underline;
+    color: var(--white-color);
+  }
   
   h1 {
     font-size: calc(2.6rem + 2vmin);
