@@ -34,7 +34,7 @@ const Main = ({auth, firestore}) => {
             <Routes>
                 <Route exact path="/" element={<Users chats={chatList} />} ></Route>
                 {
-                    chatList.map(chat => <Route exact path={`c/${chat.id}`} element={<ChatRoom auth={auth} firestore={firestore} key={chat.id} />} ></Route>)
+                    chatList.map(chat => <Route exact path={`c/${chat.id}`} element={<ChatRoom auth={auth} firestore={firestore} />} key={chat.id} ></Route>)
                 }
                 
             </Routes>
