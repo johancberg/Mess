@@ -7,8 +7,21 @@ import Users from './Users'
 const Main = ({auth, firestore}) => {
     const [chatList, setChatList] = useState([]);
 
-    const int = 'dDUGbyYn8by65oZWuDBO'
-
+    /*
+    const chatRef = firestore.collection('chats');
+    const query = chatRef.orderBy('recentPost').limit(25);
+    const [chats] = useCollectionData(query, {idField : 'id'});
+    */
+    
+    const chatsRef = firestore.collection('chats')
+    chatsRef.get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            setChatList([chatsRef.doc(doc.id)])
+        })
+    })
+    .catch(e => console.log(e))
+    /*
     const chatRef = firestore.collection('chats');
     chatRef.doc().get()
         .then(querySnapshot => {
@@ -16,11 +29,14 @@ const Main = ({auth, firestore}) => {
             setChatList(querySnapshot, ...chatList)
         })
         .catch(e => console.log(e))
-
+    */
     return (
             <Routes>
-                <Route exact path="/" element={<Users chats={chatRef} />} ></Route>
-                <Route exact path={`c/${int}`} element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
+                <Route exact path="/" element={<Users chats={chatList} />} ></Route>
+                {
+                    chatList.map(chat => <Route exact path={`c/${chat.id}`} element={<ChatRoom auth={auth} firestore={firestore} key={chat.id} />} ></Route>)
+                }
+                
             </Routes>
     )
 }
