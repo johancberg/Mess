@@ -6,7 +6,7 @@ const Users = ({ chats }) => {
     return (
         <div style={{position:'relative',top:'10vh'}}>
         {
-            chats && chats.map(msg => <Link to={`c/${msg.id}`} key={msg.id} ><p style={{color:'white'}}>Chat with {msg.id}</p></Link>)
+            chats.length && chats.map(msg => <Link to={`c/${msg.id}`} key={msg.id} ><p style={{color:'white'}}>Chat with {msg.userOne}</p></Link>)
         }
         </div>
     )
