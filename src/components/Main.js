@@ -13,19 +13,18 @@ const Main = ({auth, firestore}) => {
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 setChatList(chatList.push(doc.data()))
-                console.log(chatList)
             })
         })
         .catch(e => console.log(e))
-    }, [])
+    }, [firestore])
 
     return (
         <Routes>
             <Route exact path="/" element={<Users chats={chatList} />} ></Route>
             {
-                chatList.length && chatList.map(chat =>
-                    <Route exact path="c/:id" component={<ChatRoom auth={auth} firestore={firestore} />} key={chat.id} ></Route>
-                )
+                //chatList.length && chatList.map(chat =>
+                <Route exact path="/:id" element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
+                //)
             }
             
         </Routes>
