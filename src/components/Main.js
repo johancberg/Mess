@@ -18,15 +18,17 @@ const Main = ({auth, firestore}) => {
         })
         .catch(e => console.log(e))
     }, [])
-    
+
     return (
-            <Routes>
-                <Route exact path="/" element={<Users chats={chatList} />} ></Route>
-                {
-                    chatList.length && chatList.map(chat => <Route exact path={`c/${chat.id}`} element={<ChatRoom auth={auth} firestore={firestore} />} key={chat.id} ></Route>)
-                }
-                
-            </Routes>
+        <Routes>
+            <Route exact path="/" element={<Users chats={chatList} />} ></Route>
+            {
+                chatList.length && chatList.map(chat =>
+                    <Route exact path="c/:id" component={<ChatRoom auth={auth} firestore={firestore} />} key={chat.id} ></Route>
+                )
+            }
+            
+        </Routes>
     )
 }
 
