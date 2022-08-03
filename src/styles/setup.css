@@ -455,6 +455,18 @@ body {
     border-radius: 50%;
   }
 
+  .error-page {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error-text {
+    color: white;
+  }
+
   /* COLOUR THEMES */
   
   body[data-theme*=dark] {
@@ -472,7 +484,8 @@ body {
   body[data-theme*=dark] h5,
   body[data-theme*=dark] h6,
   body[data-theme*=dark] label,
-  body[data-theme*=dark] .switch-login p {
+  body[data-theme*=dark] .switch-login p
+  body[data-theme*=dark] .error-page p {
     color: var(--white-color);
   }
   
@@ -483,7 +496,8 @@ body {
   body[data-theme*=light] h5,
   body[data-theme*=light] h6,
   body[data-theme*=light] label,
-  body[data-theme*=light] .switch-login p {
+  body[data-theme*=light] .switch-login p
+  body[data-theme*=light] .error-page p {
     color: var(--black-color);
   }
   
