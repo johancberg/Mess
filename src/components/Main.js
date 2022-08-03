@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import ChatRoom from './ChatRoom'
+import Error from './Error'
 import Users from './Users'
 
 const Main = ({auth, firestore}) => {
@@ -22,10 +23,7 @@ const Main = ({auth, firestore}) => {
         <Routes>
             <Route exact path="/" element={<Users chats={chatList} />} ></Route>
             <Route exact path="/c/:id" element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
-            {
-                //chatList.length && chatList.map(chat =>
-                //)
-            }
+            <Route path="*" element={<Error />} ></Route>
             
         </Routes>
     )
