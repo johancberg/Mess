@@ -8,14 +8,12 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useLocation } from 'react-router-dom';
 
 const ChatRoom = ({ auth, firestore }) => {
     const scroll = useRef();
-    const messageRef = firestore.collection('messages');
-    const query = messageRef.orderBy('createdAt').limit(25);
-    const [messages] = useCollectionData(query, {idField : 'id'});
+    const messageRef = firestore.collection('messages').orderBy('createdAt');
+    const [messages, setMessages] = useState([])
 
     const searchParams = useQuery();
     const chatParam = searchParams.get("id");
@@ -63,10 +61,21 @@ const ChatRoom = ({ auth, firestore }) => {
         window.onload = scrollToBottom()
     }, [messages])
 
+    useEffect(() => {
+        messageRef.where('cid', '==', chatParam).get()
+        .then(querySnapshot => {
+            const msg = []
+            querySnapshot.forEach(doc => {
+                msg.push(doc.data())
+            });
+            setMessages(msg)
+        }).catch(e => console.log(e))
+    }, [chatParam, messageRef])
+
     return (
         <>
             <main className="message-box">
-                { messages && messages.map(msg => <ChatMessage auth={auth} key={msg.id} message={msg} setReply={setReply} />)}
+                { messages && messages.map((msg, index) => <ChatMessage auth={auth} key={index} message={msg} setReply={setReply} />)}
                 <div ref={scroll}></div>
             </main>
 
