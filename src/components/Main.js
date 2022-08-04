@@ -12,7 +12,6 @@ const Main = ({auth, firestore}) => {
             <Route exact path="/" element={<Users firestore={firestore} />} ></Route>
             <Route exact path="/c/:id" element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
             <Route path="*" element={<Error />} ></Route>
-            
         </Routes>
     )
 }
