@@ -9,15 +9,24 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useLocation } from 'react-router-dom';
 
 const ChatRoom = ({ auth, firestore }) => {
     const scroll = useRef();
     const messageRef = firestore.collection('messages');
     const query = messageRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(query, {idField : 'id'});
-    
+
+    const searchParams = useQuery();
+    const chatParam = searchParams.get("id");
+
     const [formValue, setFormValue] = useState('');
     const [reply, setReply] = useState(false);
+    
+
+    function useQuery() {
+      return new URLSearchParams(useLocation().search);
+    }
 
     const scrollToBottom = () => {
         window.scrollTo(0, document.body.scrollHeight);
