@@ -10,7 +10,7 @@ const Main = ({auth, firestore}) => {
     return (
         <Routes>
             <Route exact path="/" element={<Users firestore={firestore} />} ></Route>
-            <Route exact path="/c/:id" element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
+            <Route exact path="/c" element={<ChatRoom auth={auth} firestore={firestore} />} ></Route>
             <Route path="*" element={<Error />} ></Route>
         </Routes>
     )
