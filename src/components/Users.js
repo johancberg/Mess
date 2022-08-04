@@ -18,7 +18,7 @@ const Users = ({ firestore }) => {
     return (
         <div style={{position:'relative',top:'10vh'}}>
         {
-            chatList.length && chatList.map(msg =>
+            chatList.map(msg =>
                 <Link to={`/c/${msg.id}`} key={msg.id} ><p style={{color:'white'}}>Chat with {msg.id}</p></Link>
             )
         }
