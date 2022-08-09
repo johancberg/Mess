@@ -60,16 +60,15 @@ const ChatRoom = ({ auth, firestore }) => {
     }
 
     useEffect(() => {
-        firestore.collection('chats').where('cid', '==', chatParam).get()
+        firestore.collection('chats').doc(chatParam).get()
         .then(snapshot => {
-            snapshot.forEach(doc => {
-                const cidQuery = doc.data()
-                if (cidQuery.userOne !== auth.currentUser && cidQuery.userTwo !== auth.currentUser) {
-                    setWarning(true)
-                }
-            })
-        }).catch(e => console.log(e))
-    }, [auth.currentUser, navigate, firestore, chatParam])
+            const cidQuery = snapshot.data()
+            console.log(cidQuery)
+            if (cidQuery.userOne !== auth.currentUser && cidQuery.userTwo !== auth.currentUser) {
+                setWarning(true)
+            }
+        })
+    }, [])
 
     useEffect(() => {
         window.onload = scrollToBottom()
