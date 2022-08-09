@@ -8,7 +8,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const ChatRoom = ({ auth, firestore }) => {
     const scroll = useRef();
@@ -21,7 +21,6 @@ const ChatRoom = ({ auth, firestore }) => {
 
     const [formValue, setFormValue] = useState('');
     const [reply, setReply] = useState(false);
-    const navigate = useNavigate();
     
 
     function useQuery() {
@@ -59,21 +58,24 @@ const ChatRoom = ({ auth, firestore }) => {
         scroll.current.scrollIntoView({ behavior: 'smooth' });
     }
 
+    // Checks if the user should be able to read this chat
     useEffect(() => {
         firestore.collection('chats').doc(chatParam).get()
         .then(snapshot => {
             const cidQuery = snapshot.data()
-            console.log(cidQuery)
-            if (cidQuery.userOne !== auth.currentUser && cidQuery.userTwo !== auth.currentUser) {
+            const { uid } = auth.currentUser
+            if (cidQuery.userOne !== uid && cidQuery.userTwo !== uid) {
                 setWarning(true)
             }
         })
-    }, [])
+    }, [firestore, auth.currentUser, chatParam])
 
+    // Scrolls the chat to the bottom
     useEffect(() => {
         window.onload = scrollToBottom()
     }, [messages])
 
+    // Gets all the chat-id-messages
     useEffect(() => {
         messageRef.where('cid', '==', chatParam).get()
         .then(querySnapshot => {
