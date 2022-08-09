@@ -8,18 +8,20 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ChatRoom = ({ auth, firestore }) => {
     const scroll = useRef();
     const messageRef = firestore.collection('messages').orderBy('createdAt');
     const [messages, setMessages] = useState([])
+    const [warning, setWarning] = useState(false)
 
     const searchParams = useQuery();
     const chatParam = searchParams.get("id");
 
     const [formValue, setFormValue] = useState('');
     const [reply, setReply] = useState(false);
+    const navigate = useNavigate();
     
 
     function useQuery() {
@@ -54,8 +56,20 @@ const ChatRoom = ({ auth, firestore }) => {
             });
         }
         setFormValue('');
-        scroll.current.scrollIntoView({behavior: 'smooth' });
+        scroll.current.scrollIntoView({ behavior: 'smooth' });
     }
+
+    useEffect(() => {
+        firestore.collection('chats').where('cid', '==', chatParam).get()
+        .then(snapshot => {
+            snapshot.forEach(doc => {
+                const cidQuery = doc.data()
+                if (cidQuery.userOne !== auth.currentUser && cidQuery.userTwo !== auth.currentUser) {
+                    setWarning(true)
+                }
+            })
+        }).catch(e => console.log(e))
+    }, [auth.currentUser, navigate, firestore, chatParam])
 
     useEffect(() => {
         window.onload = scrollToBottom()
@@ -73,6 +87,12 @@ const ChatRoom = ({ auth, firestore }) => {
     }, [chatParam, messageRef])
 
     return (
+        warning
+        ?
+        <main className="message-box">
+            <h1>You don't have access</h1>
+        </main>
+        :
         <>
             <main className="message-box">
                 { messages && messages.map((msg, index) => <ChatMessage auth={auth} key={index} message={msg} setReply={setReply} />)}
