@@ -2,11 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Users = ({ firestore }) => {
-    const [chatList, setChatList] = useState([]);
+    const [chatList, setChatList] = useState([])
+    const [userList, setUserList] = useState([])
 
     useEffect(() => {
-        const chatsRef = firestore.collection('chats')
-        chatsRef.get()
+        firestore.collection('users').get()
+        .then(querySnapshot => {
+            const users = []
+            querySnapshot.forEach(doc => {
+                users.push(doc.data())
+            })
+            setUserList(users)
+        })
+        .catch(e => console.log(e))
+    }, [])
+
+    useEffect(() => {
+        firestore.collection('chats').get()
         .then(querySnapshot => {
             const chats = []
             querySnapshot.forEach(doc => {
@@ -20,8 +32,8 @@ const Users = ({ firestore }) => {
     return (
         <div style={{position:'relative',top:'10vh'}}>
         {
-            chatList.map(msg =>
-                <Link to={`/c?id=${msg.id}`} key={msg.id} ><p style={{color:'white'}}>Chat with {msg.id}</p></Link>
+            userList && chatList.map((msg,key) =>
+                <Link to={`/c?id=${msg.id}`} key={msg.id} ><p style={{color:'white'}}>Chat with {userList[key].displayName}</p></Link>
             )
         }
         </div>
