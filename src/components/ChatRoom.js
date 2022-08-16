@@ -64,7 +64,7 @@ const ChatRoom = ({ auth, firestore }) => {
         .then(snapshot => {
             const cidQuery = snapshot.data()
             const { uid } = auth.currentUser
-            if (cidQuery.userOne !== uid && cidQuery.userTwo !== uid) {
+            if (!cidQuery.users.some(user => user === uid)) {
                 setWarning(true)
             }
         })
