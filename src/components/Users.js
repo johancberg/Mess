@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Users = ({ firestore }) => {
+const Users = ({ firestore, auth }) => {
     const [chatList, setChatList] = useState([])
     const [userList, setUserList] = useState([])
+    const [otherChatNames, setOtherChatNames] = useState([])
+    const usersRef = firestore.collection('users')
+    const chatsRef = firestore.collection('chats')
 
     useEffect(() => {
-        firestore.collection('users').get()
+        usersRef.get()
         .then(querySnapshot => {
             const users = []
             querySnapshot.forEach(doc => {
@@ -15,10 +18,10 @@ const Users = ({ firestore }) => {
             setUserList(users)
         })
         .catch(e => console.log(e))
-    }, [])
+    }, [usersRef])
 
     useEffect(() => {
-        firestore.collection('chats').get()
+        chatsRef.get()
         .then(querySnapshot => {
             const chats = []
             querySnapshot.forEach(doc => {
@@ -27,13 +30,31 @@ const Users = ({ firestore }) => {
             setChatList(chats)
         })
         .catch(e => console.log(e))
-    }, [firestore])
+    }, [])
+
+
+    useEffect(() => {
+        const users = []
+        chatList.forEach(chat => {
+            const { uid } = auth.currentUser
+            const otherChatUsers = chat.users.filter(value => value !== uid)
+            otherChatUsers.forEach((docId) => {
+                usersRef.doc(docId).get()
+                .then(doc => {
+                    const { displayName } = doc.data()
+                    users.push(displayName)
+                })
+            })
+        })
+        setOtherChatNames(users)
+    }, [chatList])
+
 
     return (
         <div style={{position:'relative',top:'10vh'}}>
         {
-            userList && chatList.map((msg,key) =>
-                <Link to={`/c?id=${msg.id}`} key={msg.id} ><p style={{color:'white'}}>Chat with {userList[key].displayName}</p></Link>
+            userList && chatList.map((chat, key) =>
+                <Link to={`/c?id=${chat.id}`} key={chat.id} ><p style={{color:'white'}}>Chat with {otherChatNames[key]}</p></Link>
             )
         }
         </div>
