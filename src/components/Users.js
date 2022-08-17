@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Users = ({ firestore, auth }) => {
-    const [chatList, setChatList] = useState([])
     const [userList, setUserList] = useState([])
+    const [chatList, setChatList] = useState([])
     const [otherChatNames, setOtherChatNames] = useState([])
     const usersRef = firestore.collection('users')
     const chatsRef = firestore.collection('chats')
@@ -25,7 +25,10 @@ const Users = ({ firestore, auth }) => {
         .then(querySnapshot => {
             const chats = []
             querySnapshot.forEach(doc => {
-                chats.push(doc.data())
+                const { users } = doc.data()
+                if (users.some(user => user === auth.currentUser.uid)) {
+                    chats.push(doc.data())
+                }
             })
             setChatList(chats)
         })
