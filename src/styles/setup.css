@@ -116,8 +116,12 @@ body {
   }
 
   .userDiv {
-    width: auto;
     margin: 0.4em;
+  }
+
+  .userDiv img {
+    width: 225px;
+    height: 225px;
   }
   
   .message {
@@ -499,7 +503,7 @@ body {
   body[data-theme*=dark] label,
   body[data-theme*=dark] .switch-login p
   body[data-theme*=dark] .error-page p {
-    color: var(--white-color);
+    color: var(--white-color) !important;
   }
   
   body[data-theme*=light] h1,
@@ -511,7 +515,7 @@ body {
   body[data-theme*=light] label,
   body[data-theme*=light] .switch-login p
   body[data-theme*=light] .error-page p {
-    color: var(--black-color);
+    color: var(--black-color) !important;
   }
   
   body[data-theme*=dark] .options:hover, .options:active, .options:focus {

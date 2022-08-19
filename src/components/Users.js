@@ -63,7 +63,7 @@ const Users = ({ firestore, auth }) => {
             userList && chatList.map((chat, key) =>
                 <Link className="userDiv" to={`/c?id=${chat.id}`} key={chat.id} >
                     <img src={`${otherPhotos[key]}`} alt={otherChatNames[key]} />
-                    <p style={{color:'white'}}>Chat with {otherChatNames[key]}</p>
+                    <h4 style={{textAlign:'center'}}>Chat with {otherChatNames[key]}</h4>
                 </Link>
             )
         }
