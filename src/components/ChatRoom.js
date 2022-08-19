@@ -13,12 +13,13 @@ import { useLocation } from 'react-router-dom';
 
 const ChatRoom = ({ auth, firestore }) => {
     const scroll = useRef();
-    const messageRef = firestore.collection('messages').orderBy('createdAt');
     const [messages, setMessages] = useState([])
     const [warning, setWarning] = useState(false)
 
     const searchParams = useQuery();
     const chatParam = searchParams.get("id");
+    const chatRef = firestore.collection('chats').doc(chatParam);
+    const messageRef = firestore.collection('messages').orderBy('createdAt').where('cid', '==', chatParam);
 
     const [formValue, setFormValue] = useState('');
     const [reply, setReply] = useState(false);
@@ -32,6 +33,7 @@ const ChatRoom = ({ auth, firestore }) => {
         window.scrollTo(0, document.body.scrollHeight);
     }
 
+    // TODO: Solve "messageRef.set is not a function"
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid, displayName } = auth.currentUser;
@@ -57,6 +59,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 photoURL: auth.currentUser.photoURL
             });
         }
+        await chatRef.update({ recentPost: firebase.firestore.FieldValue.serverTimestamp() })
         setFormValue('');
         scroll.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -80,7 +83,7 @@ const ChatRoom = ({ auth, firestore }) => {
 
     // Gets all the chat-id-messages
     useEffect(() => {
-        messageRef.where('cid', '==', chatParam).get()
+        messageRef.get()
         .then(querySnapshot => {
             const msg = []
             querySnapshot.forEach(doc => {
