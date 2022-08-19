@@ -2,6 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 
 // Components
 import ChatMessage from './ChatMessage';
+import Error from './Error';
 
 // Firebase imports
 import firebase from 'firebase/app';
@@ -90,9 +91,7 @@ const ChatRoom = ({ auth, firestore }) => {
     return (
         warning
         ?
-        <main className="message-box">
-            <h1>You don't have access</h1>
-        </main>
+        <Error error="403" />
         :
         <>
             <main className="message-box">
