@@ -43,6 +43,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 replyName: reply.message.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 uid,
+                cid: chatParam,
                 photoURL: auth.currentUser.photoURL
             }).then(() => setReply(false));
             
@@ -52,6 +53,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 text: formValue,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 uid,
+                cid: chatParam,
                 photoURL: auth.currentUser.photoURL
             });
         }
