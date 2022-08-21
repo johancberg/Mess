@@ -1,50 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
-const Users = ({ firestore, auth }) => {
-    const [userList, setUserList] = useState([])
+import User from './User.js'
+
+const Users = ({ firestore, uid }) => {
     const [chatList, setChatList] = useState([])
     const [otherChatNames, setOtherChatNames] = useState([])
     const [otherPhotos, setOtherPhotos] = useState([])
-    const usersRef = firestore.collection('users')
-    const chatsRef = firestore.collection('chats')
 
-    useEffect(() => {
-        usersRef.get()
-        .then(querySnapshot => {
-            const users = []
-            querySnapshot.forEach(doc => {
-                users.push(doc.data())
+    useEffect(() => {    
+        const getChats = async () => {
+            await firestore.collection('chats').get()
+            .then(querySnapshot => {
+                const chats = []
+                querySnapshot.forEach(doc => {
+                    const { users } = doc.data()
+                    if (users.some(user => user === uid)) {
+                        chats.push(doc.data())
+                    }
+                })
+                return setChatList(chats)
             })
-            setUserList(users)
-        })
-        .catch(e => console.log(e))
-    }, [usersRef])
-
-    useEffect(() => {
-        chatsRef.get()
-        .then(querySnapshot => {
-            const chats = []
-            querySnapshot.forEach(doc => {
-                const { users } = doc.data()
-                if (users.some(user => user === auth.currentUser.uid)) {
-                    chats.push(doc.data())
-                }
-            })
-            setChatList(chats)
-        })
-        .catch(e => console.log(e))
-    }, [])
+            .catch(e => console.log(e))
+        }
+        getChats()
+    }, [uid, firestore])
 
 
     useEffect(() => {
         const users = []
         const photos = []
         chatList.forEach(chat => {
-            const { uid } = auth.currentUser
             const otherChatUsers = chat.users.filter(value => value !== uid)
-            otherChatUsers.forEach((docId) => {
-                usersRef.doc(docId).get()
+            otherChatUsers.forEach(async (docId) => {
+                await firestore.collection('users').doc(docId).get()
                 .then(doc => {
                     const { displayName, photoURL } = doc.data()
                     users.push(displayName)
@@ -54,17 +42,14 @@ const Users = ({ firestore, auth }) => {
         })
         setOtherChatNames(users)
         setOtherPhotos(photos)
-    }, [chatList])
-
+        
+    }, [chatList, uid, firestore])
 
     return (
         <div className="userList">
         {
-            userList && chatList.map((chat, key) =>
-                <Link className="userDiv" to={`/c?id=${chat.id}`} key={chat.id} >
-                    <img src={`${otherPhotos[key]}`} alt={otherChatNames[key]} />
-                    <h4 style={{textAlign:'center'}}>Chat with {otherChatNames[key]}</h4>
-                </Link>
+            chatList.map((chat, key) =>
+                <User otherPhoto={otherPhotos[key]} otherChatName={otherChatNames[key]} id={chat.id} key={chat.id} />
             )
         }
         </div>
