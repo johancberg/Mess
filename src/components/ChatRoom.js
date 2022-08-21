@@ -36,17 +36,18 @@ const ChatRoom = ({ auth, firestore }) => {
     // TODO: Solve "messageRef.set is not a function"
     const sendMessage = async(e) => {
         e.preventDefault();
-        const { uid, displayName } = auth.currentUser;
+        const { uid, photoURL, displayName } = auth.currentUser;
+        messageRef.get().then(docs => docs.forEach(doc => console.log(doc.data())))
         if (reply.message) {
             await messageRef.add({
-                displayName: displayName,
+                displayName,
                 text: formValue,
                 replyText: reply.message.text,
                 replyName: reply.message.displayName,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 uid,
                 cid: chatParam,
-                photoURL: auth.currentUser.photoURL
+                photoURL
             }).then(() => setReply(false));
             
         } else {
@@ -56,7 +57,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 uid,
                 cid: chatParam,
-                photoURL: auth.currentUser.photoURL
+                photoURL
             });
         }
         await chatRef.update({ recentPost: firebase.firestore.FieldValue.serverTimestamp() })
