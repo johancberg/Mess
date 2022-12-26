@@ -14,7 +14,7 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
     }, [auth.currentUser.uid, firestore]);
 
     return (
-        <div>
+        <>
             <div className="options" onClick={() => setMenu(!menu)}>
                 <b className="username">{data?.displayName || ''}</b>
                 <img src={data?.photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
@@ -25,7 +25,7 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
                 <button onClick={() => {setChangeGeneral(true); setMenu(!menu)}}>General settings</button>
                 <button onClick={() => {auth.signOut(); setMenu(!menu)}}>Sign out</button>
             </div> }
-        </div>
+        </>
     )
 }
 
