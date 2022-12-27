@@ -5,7 +5,7 @@ const User = ({id, otherChatName, otherPhoto}) => {
 
     return (
         <Link className="userDiv" to={`/c?id=${id}`} key={id} >
-            <img src={`${otherPhoto}`} alt={otherChatName} />
+            <img src={`${otherPhoto || 'https://imgflip.com/s/meme/Derp.jpg'}`} alt={otherChatName} />
             <h4 style={{textAlign:'center'}}>Chat with {otherChatName}</h4>
         </Link>
     )
