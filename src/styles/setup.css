@@ -356,6 +356,9 @@ body {
 
   .main-content {
     margin: 0.4em 3em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
   .main-content h2 {
