@@ -354,6 +354,12 @@ body {
     position: relative;
   }
 
+  p.bottomRight {
+    position: absolute;
+    bottom: 0.2em;
+    right: 0.2em;
+  }
+
   .main-content {
     margin: 0.4em 3em;
     display: flex;

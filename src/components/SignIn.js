@@ -7,6 +7,7 @@ import 'firebase/auth';
 
 //Components
 import PasswordInput from './PasswordInput';
+import { Link } from 'react-router-dom';
 
 const SignIn = ({ auth, firestore }) => {
     const [ registerPage, setRegisterPage ] = useState(false)
@@ -88,6 +89,9 @@ const SignIn = ({ auth, firestore }) => {
                 ) : (
                     <p>Don't have an account? <span onClick={() => resetForm(true)}>Register here!</span></p>
                 )}
+            </div>
+            <div className="switch-login">
+                <p className="bottomRight"><Link to="/about">Read about Mess</Link></p>
             </div>
         </div>
     )
