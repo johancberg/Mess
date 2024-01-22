@@ -44,11 +44,17 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     padding: 0 1em;
     color: white;
     background-color: #191c24;
-    min-height: 10vh;
+    min-height: max(10vh, 94px);
     z-index: 2;
+  }
+
+  .App-header a,
+  .App-header a img  {
+    max-height: 64px;
   }
   
   body[data-theme*=dark] .App-header {

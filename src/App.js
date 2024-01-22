@@ -41,7 +41,7 @@ function App() {
     <BrowserRouter>
     <div className="App">
       <header className="App-header">
-        <Link to="/"><h1>Mess</h1></Link>
+        <Link to="/"><img className="mainLogo" src="logo.png" alt="Logo saying Mess" /></Link>
         { auth.currentUser && <Options auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} setChangeGeneral={setChangeGeneral} /> }
       </header>
       { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
