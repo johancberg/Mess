@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './styles/App.css';
 import './fontawesome/css/all.css';
 
@@ -38,7 +38,6 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
     <div className="App">
       <header className="App-header">
         <Link to="/"><img className="mainLogo" src="logo.png" alt="Logo saying Mess" /></Link>
@@ -55,7 +54,6 @@ function App() {
           <GeneralSettings auth={auth} firestore={firestore} setChangeGeneral={setChangeGeneral} />
       }
     </div>
-    </BrowserRouter>
   );
 }
 
