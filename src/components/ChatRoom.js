@@ -101,7 +101,7 @@ const ChatRoom = ({ auth, firestore }) => {
         :
         <>
             <main className="message-box">
-                { messages && messages.map((msg, index) => <ChatMessage auth={auth} key={index} message={msg} setReply={setReply} />)}
+                { messages.map((msg, index) => <ChatMessage auth={auth} key={index} message={msg} setReply={setReply} />)}
                 <div ref={scroll}></div>
             </main>
 
