@@ -8,49 +8,46 @@ const Users = ({ firestore, uid }) => {
     const usersDB = firestore.collection('users')
     
     useEffect(() => {
-        const tempChats = []
-
-        chatsDB.get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                const { users } = doc.data()
-                if (users.some(user => user === uid)) {
-                    tempChats.push(doc.data())
-                }
-            })
-            pushChats(tempChats)
-        })
-        .catch(e => console.log(e))
-        
-        const pushChats = (chats) => {
+        const pushUsers = async () => {
             const tempChats = []
-            chats.forEach(chat => {
+    
+            await chatsDB.get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    const { users } = doc.data()
+                    if (users.some(user => user === uid)) {
+                        tempChats.push(doc.data())
+                    }
+                })
+                pushChatLists(tempChats)
+            })
+        }
+    
+        const pushChatLists = async (chats) => {
+            const newChats = []
+            await chats.forEach(chat => {
                 const otherChatUsers = chat.users.filter(value => value !== uid)
                 otherChatUsers.forEach(docId => {
                     usersDB.doc(docId).get()
                         .then(doc => {
                             const { displayName, photoURL } = doc.data()
-                            tempChats.push({
+                            newChats.push({
                                 photoURL: photoURL,
                                 displayName: displayName,
                                 id: chat.id
                             })
-                            setChatList(tempChats) // Move to line 40?
                         })
                 })
-            }
-        )}
-    },[uid, firestore])
+                setChatList(newChats)
+            })
+        }
 
-
+        pushUsers()
+    },[])
 
     return (
         <div className="userList">
-            { chatList.map(
-                (chat, key) => {
-                    return <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />
-                })
-            }
+            { chatList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
         </div>
     )
 }
