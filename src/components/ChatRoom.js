@@ -92,7 +92,7 @@ const ChatRoom = ({ auth, firestore }) => {
             });
             setMessages(msg)
         }).catch(e => console.log(e))
-    }, [chatParam, messageRef])
+    }, [chatParam])
 
     return (
         warning
