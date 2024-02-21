@@ -63,15 +63,15 @@ const SignIn = ({ auth, firestore }) => {
 
     return (
         <div className="main-page">
-                <form className="signin-form">
+                <form id="signin" className="signin-form">
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
                     { registerPage &&
-                    <div><label>User Name </label>
-                        <input type="text" onChange={e => setStateName(e.target.value)} value={stateName}></input>
+                    <div><label for="signin-username">User Name </label>
+                        <input id="signin-username" type="text" name="username" onChange={e => setStateName(e.target.value)} value={stateName}></input>
                     </div>
                     }
-                    <div><label>E-mail </label>
-                        <input type="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
+                    <div><label for="signin-email">E-mail </label>
+                        <input id="signin-email" type="email" name="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
                     </div>
                     <PasswordInput label={'Password'} stateType={setStatePassword} value={statePassword} passFunction={signInWithPassword}/>
                     { registerPage &&
