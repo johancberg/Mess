@@ -51,7 +51,7 @@ function App() {
           <ProfileSettings auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} />
       }
       { auth.currentUser && changeGeneral &&
-          <GeneralSettings auth={auth} firestore={firestore} setChangeGeneral={setChangeGeneral} />
+          <GeneralSettings setChangeGeneral={setChangeGeneral} />
       }
     </div>
   );

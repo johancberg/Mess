@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const GeneralSettings = ({auth, firestore, setChangeGeneral}) => {
+const GeneralSettings = ({setChangeGeneral}) => {
     const [colorInput, setColorinput] = useState( localStorage.getItem("mess-theme") === "light" ? true : false );
 
     useEffect(() => {
