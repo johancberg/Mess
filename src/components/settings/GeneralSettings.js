@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const PhotoSettings = ({auth, firestore, setChangeGeneral}) => {
+const GeneralSettings = ({auth, firestore, setChangeGeneral}) => {
     const [colorInput, setColorinput] = useState( localStorage.getItem("mess-theme") === "light" ? true : false );
 
     useEffect(() => {
@@ -33,4 +33,4 @@ const PhotoSettings = ({auth, firestore, setChangeGeneral}) => {
     )
 }
 
-export default PhotoSettings
+export default GeneralSettings

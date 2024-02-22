@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
+const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
     const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
     const [nameInput, setNameinput] = useState(auth.currentUser.displayName || '')
     const messageRef = firestore.collection('messages')
@@ -71,4 +71,4 @@ const PhotoSettings = ({auth, firestore, setChangeProfile}) => {
     )
 }
 
-export default PhotoSettings
+export default ProfileSettings
