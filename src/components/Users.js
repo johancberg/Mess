@@ -24,21 +24,15 @@ const Users = ({ firestore, uid }) => {
         }
     
         const pushChatLists = async (chats) => {
-            const newChats = []
             await chats.forEach(chat => {
                 const otherChatUsers = chat.users.filter(value => value !== uid)
                 otherChatUsers.forEach(docId => {
                     usersDB.doc(docId).get()
                         .then(doc => {
                             const { displayName, photoURL } = doc.data()
-                            newChats.push({
-                                photoURL: photoURL,
-                                displayName: displayName,
-                                id: chat.id
-                            })
+                            setChatList(prevChats => [...prevChats, { photoURL, displayName, id: chat.id }])
                         })
                 })
-                setChatList(newChats)
             })
         }
 
