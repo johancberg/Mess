@@ -4,6 +4,7 @@ import User from './User.js'
 
 const Users = ({ firestore, uid }) => {
     const [chatList, setChatList] = useState([])
+    const [userList, setUserList] = useState([])
     const chatsDB = firestore.collection('chats')
     const usersDB = firestore.collection('users')
     
@@ -40,8 +41,15 @@ const Users = ({ firestore, uid }) => {
     },[])
 
     return (
-        <div className="userList">
-            { chatList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
+        <div className="userPage">
+            <h2>Recent chats</h2>
+            <div className="userList">
+                { chatList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
+            </div>
+            <h2>Other users</h2>
+            <div className="userList">
+                { userList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
+            </div>
         </div>
     )
 }

@@ -112,12 +112,17 @@ body {
     width: 100%;
   }
 
+  .userPage {
+    top: 10vh;
+    padding: 2em;
+
+  }
+
   .userList {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    top: 10vh;
-    padding: 2em;
+    min-height: 275px;
   }
 
   .userDiv {
