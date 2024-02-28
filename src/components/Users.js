@@ -4,23 +4,23 @@ import User from './User.js'
 
 const Users = ({ firestore, uid }) => {
     const [chatList, setChatList] = useState([])
-    const [userList, setUserList] = useState([])
+    const [othersList, setOthersList] = useState([])
     const chatsDB = firestore.collection('chats')
     const usersDB = firestore.collection('users')
     
     useEffect(() => {
+        const tempList = []
         const pushUsers = async () => {
-            const tempChats = []
-    
             await chatsDB.get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const { users } = doc.data()
                     if (users.some(user => user === uid)) {
-                        tempChats.push(doc.data())
+                        tempList.push(doc.data())
                     }
                 })
-                pushChatLists(tempChats)
+                pushChatLists(tempList)
+                pushOtherUsers(tempList)
             })
         }
     
@@ -35,6 +35,24 @@ const Users = ({ firestore, uid }) => {
                         })
                 })
             })
+        }
+
+        const pushOtherUsers = async (chats) => {
+            const otherChatUsers = []
+            await chats.forEach(chat => {
+                otherChatUsers.push(chat.users.filter(value => value !== uid).toString())
+            })
+
+            await usersDB.get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        if (!otherChatUsers.includes(doc.id) && doc.id !== uid) {
+                            const { displayName, photoURL } = doc.data()
+                            setOthersList(prevUsers => [...prevUsers, { photoURL, displayName, id: doc.id }])
+                        }
+                    })
+                })
+            
         }
 
         pushUsers()
@@ -52,7 +70,7 @@ const Users = ({ firestore, uid }) => {
             }
             <h2>Other users</h2>
             <div className="userList">
-                { userList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
+                { othersList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
             </div>
         </div>
     )
