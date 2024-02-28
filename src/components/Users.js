@@ -64,13 +64,13 @@ const Users = ({ firestore, uid }) => {
                 <>
                 <h2>Recent chats</h2>
                 <div className="userList">
-                    { chatList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
+                    { chatList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} newContact={false} />) }
                 </div>
                 </>
             }
             <h2>Other users</h2>
             <div className="userList">
-                { othersList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} />) }
+                { othersList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} newContact={true} />) }
             </div>
         </div>
     )
