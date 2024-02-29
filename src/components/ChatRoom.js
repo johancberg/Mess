@@ -86,11 +86,9 @@ const ChatRoom = ({ auth, firestore }) => {
     useEffect(() => {
         messageRef.get()
         .then(querySnapshot => {
-            const msg = []
             querySnapshot.forEach(doc => {
-                msg.push(doc.data())
+                setMessages(docs => [...docs, doc.data()])
             });
-            setMessages(msg)
         }).catch(e => console.log(e))
     }, [chatParam])
 
