@@ -13,7 +13,7 @@ const TempChatRoom = ({ auth, firestore }) => {
 
     const searchParams = useQuery();
     const userParam = searchParams.get("id");
-    const userRef = firestore.collection('user').doc(userParam);
+    const chatRef = firestore.collection('chats');
     const messageRef = firestore.collection('messages').orderBy('createdAt').where('cid', '==', userParam);
 
     const [formValue, setFormValue] = useState('');
@@ -37,32 +37,38 @@ const TempChatRoom = ({ auth, firestore }) => {
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid, photoURL, displayName } = auth.currentUser;
-        messageRef.get().then(docs => docs.forEach(doc => console.log(doc.data())))
-        if (reply.message) {
-            await messageRef.add({
-                displayName,
-                text: formValue,
-                replyText: reply.message.text,
-                replyName: reply.message.displayName,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                uid,
-                cid: chatParam,
-                photoURL
-            }).then(() => setReply(false));
-            
-        } else {
-            await messageRef.add({
-                displayName: displayName,
-                text: formValue,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                uid,
-                cid: chatParam,
-                photoURL
-            });
-        }
-        await userRef.update({ recentPost: firebase.firestore.FieldValue.serverTimestamp() })
-        setFormValue('');
-        scroll.current.scrollIntoView({ behavior: 'smooth' });
+
+        await chatRef.doc(chatParam).set({
+            id: chatParam,
+            recentPost: firebase.firestore.FieldValue.serverTimestamp(),
+            users: [ uid ]
+        }).then(() => {
+            if (reply.message) {
+                messageRef.add({
+                    displayName,
+                    text: formValue,
+                    replyText: reply.message.text,
+                    replyName: reply.message.displayName,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uid,
+                    cid: chatParam,
+                    photoURL
+                }).then(() => setReply(false));
+            } else {
+                messageRef.add({
+                    displayName: displayName,
+                    text: formValue,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uid,
+                    cid: chatParam,
+                    photoURL
+                });
+            }
+            setFormValue('');
+            scroll.current.scrollIntoView({ behavior: 'smooth' });
+        }).catch((err) => console.error(err)
+
+        )
     }
 
     // Generate chatparameter
