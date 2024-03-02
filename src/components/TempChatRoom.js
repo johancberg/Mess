@@ -78,7 +78,8 @@ const TempChatRoom = ({ auth, firestore }) => {
 
     return (
         <>
-            <main className="message-box">
+            <main className="message-temp">
+                <h2>Write your first message below</h2>
             </main>
 
             <form className="input-message" onSubmit={ sendMessage }>

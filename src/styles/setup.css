@@ -141,10 +141,16 @@ body {
   }
   
   .message-box {
-    top: 10vh;
     min-height: 82vh;
-    position: relative;
-    padding: 0 1.5em 3.5em 1.5em;
+    padding: 0.5em 1.5em 3.5em 1.5em;
+  }
+  
+  .message-temp {
+    min-height: 82vh;
+    padding: 0.5em 1.5em 3.5em 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .input-message {
