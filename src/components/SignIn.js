@@ -40,6 +40,7 @@ const SignIn = ({ auth, firestore }) => {
                     .then(async (userCredential) => {
                         await firestore.collection('users').doc(userCredential.user.uid).set({
                             displayName: stateName,
+                            lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp(),
                             photoURL: '',
                             verified: false
                         })

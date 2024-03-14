@@ -7,6 +7,7 @@ const Users = ({ firestore, uid }) => {
     const [othersList, setOthersList] = useState([])
     const chatsDB = firestore.collection('chats')
     const usersDB = firestore.collection('users')
+    const usersDBfilter = usersDB.orderBy('lastLoggedIn').limit(30)
     
     useEffect(() => {
         const tempList = []
@@ -43,7 +44,7 @@ const Users = ({ firestore, uid }) => {
                 otherChatUsers.push(chat.users.filter(value => value !== uid).toString())
             })
 
-            await usersDB.get()
+            await usersDBfilter.get()
                 .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         if (!otherChatUsers.includes(doc.id) && doc.id !== uid) {
