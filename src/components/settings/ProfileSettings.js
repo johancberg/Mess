@@ -14,7 +14,7 @@ const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 messageRef.doc(doc.id).update({photoURL: URLinput})
-					auth.currentUser.updateProfile({photoURL: URLinput})
+                auth.currentUser.updateProfile({photoURL: URLinput})
             });
         }).catch(e => console.log(e))
 
