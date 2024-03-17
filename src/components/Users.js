@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import User from './User.js'
+import firebase from 'firebase/app';
 
 const Users = ({ firestore, uid }) => {
     const [chatList, setChatList] = useState([])
@@ -53,10 +54,15 @@ const Users = ({ firestore, uid }) => {
                         }
                     })
                 })
-            
+        }
+        
+        const updateLastLoggedIn = () => {
+            usersDB.doc(uid).update({lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp()})
+            .catch(e => console.error(e))
         }
 
         pushUsers()
+        updateLastLoggedIn()
     },[])
 
     return (
