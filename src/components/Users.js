@@ -57,8 +57,18 @@ const Users = ({ firestore, uid }) => {
         }
         
         const updateLastLoggedIn = () => {
-            usersDB.doc(uid).update({lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp()})
-            .catch(e => console.error(e))
+            usersDB.doc(uid).get()
+            .then((doc) => {
+                const { lastLoggedIn } = doc.data()
+                const currentDate = new Date()
+                const lastLoggedInMinutes = Math.round(lastLoggedIn.toMillis() / 1000 / 100)
+                const currentDateMinutes = Math.round(currentDate.getTime() / 1000 / 100)
+
+                if (lastLoggedInMinutes !== currentDateMinutes) {
+                    usersDB.doc(uid).update({lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp()})
+                    .catch(e => console.error(e))
+                }
+            }).catch(e => console.error(e))
         }
 
         pushUsers()
