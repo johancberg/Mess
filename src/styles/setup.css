@@ -197,7 +197,7 @@ body {
     background-color: rgb(78, 78, 197);
   }
   
-  button:focus {
+  button:focus-visible {
     outline: 3px solid #0b93f6;
   }
 
@@ -221,15 +221,12 @@ body {
     display: flex;
     align-items: center;
     padding: 0.3em;
+    border-radius: 48px;
     position: relative;
     cursor: pointer;
     right: 0.8em;
   }
 
-  .options:hover, .options:active, .options:focus-visible {
-    border-radius: 48px;
-  }
-  
   .dropdownMenu {
     position: absolute;
     right: 3em;
