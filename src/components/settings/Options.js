@@ -17,10 +17,10 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
 
     return (
         <>
-            <div className="options" onClick={() => setMenu(!menu)}>
+            <button className="options" onClick={() => setMenu(!menu)}>
                 <b className="username">{data?.displayName || ''}</b>
                 <img src={data?.photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
-            </div>
+            </button>
             { menu && <div className="dropdownBlocker" onClick={() => setMenu(!menu)}></div> }
             { menu && <div className="dropdownMenu">
                 <button onClick={() => {setChangeProfile(true); setMenu(!menu)}}>Profile settings</button>

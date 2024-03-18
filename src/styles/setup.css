@@ -216,7 +216,8 @@ body {
     text-align: end;
   }
   
-  .options {
+  button.options {
+    background: #191c24;
     display: flex;
     align-items: center;
     padding: 0.3em;
@@ -225,8 +226,8 @@ body {
     right: 0.8em;
   }
 
-  .options:hover, .options:active, .options:focus {
-    border-radius: 10px;
+  .options:hover, .options:active, .options:focus-visible {
+    border-radius: 48px;
   }
   
   .dropdownMenu {
@@ -256,7 +257,7 @@ body {
   
   .options .username {
     font-size: 2rem;
-    margin-right: 0.4em;
+    margin: 0 0.4em 0 0.2em;
   }
   
   .option-photo {
@@ -551,11 +552,15 @@ body {
     color: var(--black-color) !important;
   }
   
-  body[data-theme*=dark] .options:hover, .options:active, .options:focus {
+  body[data-theme*=dark] .options:hover,
+  body[data-theme*=dark] .options:active,
+  body[data-theme*=dark] .options:focus-visible {
     background-color: #111318;
   }
   
-  body[data-theme*=light] .options:hover, .options:active, .options:focus {
+  body[data-theme*=light] .options:hover,
+  body[data-theme*=light] .options:active,
+  body[data-theme*=light] .options:focus-visible {
     background-color: #b4b7be;
   }
 
