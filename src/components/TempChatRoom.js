@@ -1,23 +1,19 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 // Firebase imports
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const TempChatRoom = ({ auth, firestore }) => {
     const [chatParam, setChatParam] = useState()
-    const scroll = useRef();
-
-    const searchParams = useQuery();
-    const userParam = searchParams.get("id");
-    const chatRef = firestore.collection('chats');
-    const messageRef = firestore.collection('messages').orderBy('createdAt').where('cid', '==', userParam);
-
     const [formValue, setFormValue] = useState('');
-    const [reply, setReply] = useState(false);
+    const navigate = useNavigate();
+
+    const searchParams = new URLSearchParams(useLocation().search);
+    const userId = searchParams.get('id')
     
     const generateChatParam = () => {
         let result = '';
@@ -29,46 +25,25 @@ const TempChatRoom = ({ auth, firestore }) => {
         return result;
     }
 
-    function useQuery() {
-      return new URLSearchParams(useLocation().search);
-    }
-
-    // TODO: Solve "messageRef.set is not a function"
-    const sendMessage = async(e) => {
+    const createChat = async(e) => {
         e.preventDefault();
         const { uid, photoURL, displayName } = auth.currentUser;
 
-        await chatRef.doc(chatParam).set({
+        await firestore.collection('chats').doc(chatParam).set({
             id: chatParam,
             recentPost: firebase.firestore.FieldValue.serverTimestamp(),
-            users: [ uid ]
+            users: [ uid, userId ]
         }).then(() => {
-            if (reply.message) {
-                messageRef.add({
-                    displayName,
-                    text: formValue,
-                    replyText: reply.message.text,
-                    replyName: reply.message.displayName,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uid,
-                    cid: chatParam,
-                    photoURL
-                }).then(() => setReply(false));
-            } else {
-                messageRef.add({
-                    displayName: displayName,
-                    text: formValue,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uid,
-                    cid: chatParam,
-                    photoURL
-                });
-            }
-            setFormValue('');
-            scroll.current.scrollIntoView({ behavior: 'smooth' });
-        }).catch((err) => console.error(err)
-
-        )
+            firestore.collection('messages').add({
+                displayName: displayName,
+                text: formValue,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                uid,
+                cid: chatParam,
+                photoURL
+            });
+            navigate('/c?id=' + chatParam)
+        }).catch((err) => console.error(err))
     }
 
     // Generate chatparameter
@@ -82,7 +57,7 @@ const TempChatRoom = ({ auth, firestore }) => {
                 <h2>Write your first message below</h2>
             </main>
 
-            <form className="input-message" onSubmit={ sendMessage }>
+            <form className="input-message" onSubmit={ createChat }>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} ><i className="fas fa-paper-plane"></i></button>
             </form>
