@@ -22,12 +22,13 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
                 <img src={data?.photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
             </button>
             { menu && <div className="dropdownBlocker" onClick={() => setMenu(!menu)}></div> }
-            { menu && <div className="dropdownMenu">
+            { <dialog className="dropdownMenu" open={menu} aria-modal={menu} aria-hidden={!menu}>
                 <button onClick={() => {setChangeProfile(true); setMenu(!menu)}}>Profile settings</button>
                 <button onClick={() => {setChangeGeneral(true); setMenu(!menu)}}>General settings</button>
                 <button onClick={() => {setMenu(!menu); navigate('about')}}>About Mess</button>
                 <button onClick={() => {auth.signOut(); setMenu(!menu)}}>Sign out</button>
-            </div> }
+            </dialog>
+            }
         </>
     )
 }
