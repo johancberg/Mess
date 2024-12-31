@@ -37,22 +37,36 @@ function App() {
     }
   }, [])
 
-  return (
-    <div className="App">
+  const Header = React.memo(() => {
+    return (
       <header className="App-header">
         <Link to="/"><img className="mainLogo" src="logo.png" alt="Logo saying Mess" /></Link>
         { auth.currentUser && <Options auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} setChangeGeneral={setChangeGeneral} /> }
       </header>
-      { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
+    )
+  });
 
-      { auth.currentUser && (changeProfile || changeGeneral) && <div className="dropdownBlocker" onClick={() => {setChangeProfile(false); setChangeGeneral(false);}}></div>}
-
-      { auth.currentUser && changeProfile &&
+  const Settings = React.memo(() => {
+    return (
+      <>
+      { changeProfile || changeGeneral && 
+          <div className="dropdownBlocker" onClick={() => {setChangeProfile(false); setChangeGeneral(false);}}></div>
+      }
+      { changeProfile &&
           <ProfileSettings auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} />
       }
-      { auth.currentUser && changeGeneral &&
+      { changeGeneral &&
           <GeneralSettings setChangeGeneral={setChangeGeneral} />
       }
+      </>
+    )});
+
+  return (
+    <div className="App">
+      <Header />
+      { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
+
+      { auth.currentUser && <Settings /> }
     </div>
   );
 }
