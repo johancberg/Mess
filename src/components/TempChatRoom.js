@@ -52,16 +52,16 @@ const TempChatRoom = ({ auth, firestore }) => {
     }, [])
 
     return (
-        <>
-            <main className="message-temp">
+        <main>
+            <div className="message-temp">
                 <h2>Write your first message below</h2>
-            </main>
+            </div>
 
             <form className="input-message" onSubmit={ createChat }>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} ><i className="fas fa-paper-plane"></i></button>
             </form>
-        </>
+        </main>
     )
 }
 

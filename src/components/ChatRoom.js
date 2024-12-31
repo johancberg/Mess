@@ -97,11 +97,11 @@ const ChatRoom = ({ auth, firestore }) => {
         ?
         <Error error="403" />
         :
-        <>
-            <main className="message-box">
+        <main>
+            <div className="message-box">
                 { messages.map((msg, index) => <ChatMessage auth={auth} key={index} message={msg} setReply={setReply} />)}
                 <div ref={scroll}></div>
-            </main>
+            </div>
 
             { reply.message &&
                 <div className="reply-field">
@@ -113,7 +113,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value) } placeholder={"Type something"}/>
                 <button type="submit" disabled={!formValue} ><i className="fas fa-paper-plane"></i></button>
             </form>
-        </>
+        </main>
     )
 }
 

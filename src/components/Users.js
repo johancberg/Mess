@@ -76,7 +76,7 @@ const Users = ({ firestore, uid }) => {
     },[])
 
     return (
-        <div className="userPage">
+        <main className="userPage">
             { 0 < chatList.length &&
                 <>
                 <h2>Recent chats</h2>
@@ -89,7 +89,7 @@ const Users = ({ firestore, uid }) => {
             <div className="userList">
                 { othersList.map((chat, key) => <User otherPhoto={chat.photoURL} otherChatName={chat.displayName} id={chat.id} key={key} newContact={true} />) }
             </div>
-        </div>
+        </main>
     )
 }
 

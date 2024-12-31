@@ -3,7 +3,7 @@ import React from "react";
 const About = () => {
 
     return (
-        <div className="main-content">
+        <main className="main-content">
             <div>
                 <h2>What is Mess?</h2>
                 <p className="switch-login">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
@@ -31,7 +31,7 @@ const About = () => {
                 <p className="switch-login">Publisher of Mess is Johan Berg</p>
             </div>
             <img alt="Johan Berg" src="johanb.png" height="720"></img>
-        </div>
+        </main>
     )
 }
 
