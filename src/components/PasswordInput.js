@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PasswordInput = ({ label, stateType, value, passFunction }) => {
+const PasswordInput = ({ label, name, handleForm, value, passFunction }) => {
     const [ showEye, setShowEye] = useState( false )
     const [ showPassword, setShowPassword] = useState(false)
 
@@ -20,7 +20,7 @@ const PasswordInput = ({ label, stateType, value, passFunction }) => {
 
     return (
     <div><label htmlFor={setId(label)}>{label}</label>
-        <input id={setId(label)} type={ showPassword ? 'text' : 'password' } value={value} autoComplete='current-password' onFocus={ () => setShowEye(true) } onBlur={ () => { setShowEye(false); setShowPassword(false) } } onChange={e => stateType(e.target.value)} onKeyPress={handleKeyPress}></input>
+        <input id={setId(label)} type={ showPassword ? 'text' : 'password' } value={value} name={name} autoComplete='current-password' onFocus={ () => setShowEye(true) } onBlur={ () => { setShowEye(false); setShowPassword(false) } } onChange={handleForm} onKeyPress={handleKeyPress}></input>
         { showEye && <i onMouseOver={() => setShowPassword(true)} onMouseLeave={() => setShowPassword(false)} className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i> }
     </div>
     )

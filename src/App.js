@@ -65,7 +65,6 @@ function App() {
     <div className="App">
       <Header />
       { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
-
       { auth.currentUser && <Settings /> }
     </div>
   );

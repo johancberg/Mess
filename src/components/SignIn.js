@@ -10,11 +10,21 @@ import PasswordInput from './PasswordInput';
 import { Link } from 'react-router-dom';
 
 const SignIn = ({ auth, firestore }) => {
+    const initForm = {
+        name: '',
+        email: '',
+        password: '',
+        rewritePassword: ''
+    }
     const [ registerPage, setRegisterPage ] = useState(false)
-    const [ stateName, setStateName] = useState('')
-    const [ stateEmail, setStateEmail] = useState('')
-    const [ statePassword, setStatePassword] = useState('')
-    const [ stateRewritePassword, setStateRewritePassword] = useState('')
+    const [ form, setForm ] = useState(initForm);
+
+    const handleForm = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
 
     // Executes when the user logs in using its Google Account
     const signInWithGoogle = () => {
@@ -25,21 +35,18 @@ const SignIn = ({ auth, firestore }) => {
     // Gets executed when use logs in or register using email and password
     const signInWithPassword = async (e) => {
         e.preventDefault()
-        const email = stateEmail
-        const password = statePassword
         if (registerPage) {
             //Register
-            const redoPassword = stateRewritePassword
-            if (password !== redoPassword) {
+            if (form.password !== form.rewritePassword) {
                 alert('Error: The passwords do not match. Try again.')
-            } else if (password.length < 6) {
+            } else if (form.password.length < 6) {
                 alert('Error: The password has to be 6 characters or longer.')
             } else {
                 try {
-                    await auth.createUserWithEmailAndPassword(email, password)
+                    await auth.createUserWithEmailAndPassword(form.email, form.password)
                     .then(async (userCredential) => {
                         await firestore.collection('users').doc(userCredential.user.uid).set({
-                            displayName: stateName,
+                            displayName: form.name,
                             lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp(),
                             photoURL: '',
                             verified: false
@@ -50,16 +57,14 @@ const SignIn = ({ auth, firestore }) => {
             }
         } else {
             //Login
-            await auth.signInWithEmailAndPassword(email, password)
+            await auth.signInWithEmailAndPassword(form.email, form.password)
             .catch(error => alert(error))
         }
     }
 
     const resetForm = (condition) => {
         setRegisterPage(condition)
-        setStateEmail('')
-        setStatePassword('')
-        setStateRewritePassword('')
+        setForm(initForm);
     }
 
     return (
@@ -68,15 +73,15 @@ const SignIn = ({ auth, firestore }) => {
                     <h2>{ registerPage ? 'Register' : 'Login' }</h2>
                     { registerPage &&
                     <div><label htmlFor="signin-username">User Name </label>
-                        <input id="signin-username" type="text" name="username" autoComplete="username" onChange={e => setStateName(e.target.value)} value={stateName}></input>
+                        <input id="signin-username" type="text" name="name" autoComplete="name" onChange={handleForm} value={form.name}></input>
                     </div>
                     }
                     <div><label htmlFor="signin-email">E-mail </label>
-                        <input id="signin-email" type="email" name="email" autoComplete="email" onChange={e => setStateEmail(e.target.value)} value={stateEmail}></input>
+                        <input id="signin-email" type="email" name="email" autoComplete="email" onChange={handleForm} value={form.email}></input>
                     </div>
-                    <PasswordInput label={'Password'} stateType={setStatePassword} value={statePassword} passFunction={signInWithPassword}/>
+                    <PasswordInput label={'Password'} name="password" handleForm={handleForm} value={form.password} passFunction={signInWithPassword}/>
                     { registerPage &&
-                    <PasswordInput label={'Rewrite Password'} stateType={setStateRewritePassword} value={stateRewritePassword} passFunction={signInWithPassword}/>
+                    <PasswordInput label={'Rewrite Password'} name="rewritePassword" handleForm={handleForm} value={form.rewritePassword} passFunction={signInWithPassword}/>
                     }
                 </form>
             <div className="login-buttons">
