@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import User from './User.js'
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 
 const Users = ({ firestore, uid }) => {
     const [chatList, setChatList] = useState([])

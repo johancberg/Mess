@@ -12,16 +12,15 @@ import ProfileSettings from './components/settings/ProfileSettings'
 import GeneralSettings from './components/settings/GeneralSettings'
 
 // Firebase imports
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+  
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-firebase.initializeApp(ApiKey())
-
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+const app = initializeApp(ApiKey());
+const auth = getAuth(app);
+const firestore = getFirestore(app);
 
 function App() {
   const [user] = useAuthState(auth);
