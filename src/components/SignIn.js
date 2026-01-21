@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-
-// Firebase imports
-import firebase from 'firebase/compat/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 //Components
 import PasswordInput from './PasswordInput';
@@ -27,9 +24,14 @@ const SignIn = ({ auth, firestore }) => {
     }
 
     // Executes when the user logs in using its Google Account
-    const signInWithGoogle = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider);
+    const signInWithGoogle = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (e) {
+            console.error(e);
+            alert(e.message || e);
+        }
     }
 
     // Gets executed when use logs in or register using email and password
@@ -43,21 +45,19 @@ const SignIn = ({ auth, firestore }) => {
                 alert('Error: The password has to be 6 characters or longer.')
             } else {
                 try {
-                    await auth.createUserWithEmailAndPassword(form.email, form.password)
-                    .then(async (userCredential) => {
-                        await firestore.collection('users').doc(userCredential.user.uid).set({
-                            displayName: form.name,
-                            lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp(),
-                            photoURL: '',
-                            verified: false
-                        })
+                    const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password)
+                    await setDoc(doc(firestore, 'users', userCredential.user.uid), {
+                        displayName: form.name,
+                        lastLoggedIn: serverTimestamp(),
+                        photoURL: '',
+                        verified: false
                     })
                 }
                 catch(error) { alert(error) }
             }
         } else {
             //Login
-            await auth.signInWithEmailAndPassword(form.email, form.password)
+            await signInWithEmailAndPassword(auth, form.email, form.password)
             .catch(error => alert(error))
         }
     }

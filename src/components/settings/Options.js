@@ -1,19 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router'
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
     const [menu, setMenu] = useState(false);
     const [data, setData] = useState({});
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dbUsers = collection(firestore, 'users');
 
     useEffect(() => {
-        firestore.collection("users").doc(auth.currentUser.uid).get().then((snapshot) => {
-            const data = snapshot.data()
-            // Loop through the data and store
-            // it in array to display
-            setData(data);
-        });
-    }, [auth.currentUser.uid, firestore]);
+        getDocs(query(dbUsers, where('uid', '==', auth.currentUser.uid)))
+            .then((snapshot) => {
+                const data = snapshot.docs.map((doc) => doc.data())[0];
+                // Loop through the data and store
+                // it in array to display
+                setData(data);
+            });
+    }, [auth.currentUser.uid, dbUsers]);
 
     return (
         <>

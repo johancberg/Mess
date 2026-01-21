@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 import './styles/App.css';
 import './fontawesome/css/all.css';
 
@@ -10,13 +14,6 @@ import ApiKey from './components/ApiKey'
 import Options from './components/settings/Options'
 import ProfileSettings from './components/settings/ProfileSettings'
 import GeneralSettings from './components/settings/GeneralSettings'
-
-// Firebase imports
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-  
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 const app = initializeApp(ApiKey());
 const auth = getAuth(app);
@@ -48,7 +45,7 @@ function App() {
   const Settings = React.memo(() => {
     return (
       <>
-      { changeProfile || changeGeneral && 
+      { (changeProfile || changeGeneral) && 
           <div className="dropdownBlocker" onClick={() => {setChangeProfile(false); setChangeGeneral(false);}}></div>
       }
       { changeProfile &&
