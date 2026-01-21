@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react'
 
 import User from './User.js'
-import firebase from 'firebase/compat/app';
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 const Users = ({ firestore, uid }) => {
     const [chatList, setChatList] = useState([])
     const [othersList, setOthersList] = useState([])
-    const chatsDB = firestore.collection('chats')
-    const usersDB = firestore.collection('users')
-    const usersDBfilter = usersDB.orderBy('lastLoggedIn').limit(30)
-    
+    const chatsDB = collection(firestore, 'chats')
+    const usersDB = collection(firestore, 'users')
+    const usersDBfilter = query(usersDB, orderBy('lastLoggedIn'), limit(30))
+
     useEffect(() => {
         const tempList = []
         const pushUsers = async () => {
-            await chatsDB.get()
+            await getDocs(chatsDB)
             .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const { users } = doc.data()
                     if (users.some(user => user === uid)) {
-                        tempList.push(doc.data())
+                        tempList.push({ id: doc.id, ...doc.data() })
                     }
                 })
                 pushChatLists(tempList)
@@ -26,26 +26,27 @@ const Users = ({ firestore, uid }) => {
             })
         }
     
-        const pushChatLists = async (chats) => {
-            await chats.forEach(chat => {
+        // TODO: Refactor with the new id field on line 21
+        const pushChatLists = (chats) => {
+            for (const chat of chats) {
                 const otherChatUsers = chat.users.filter(value => value !== uid)
-                otherChatUsers.forEach(docId => {
-                    usersDB.doc(docId).get()
+                otherChatUsers.forEach(async docId => {
+                    await getDoc(doc(usersDB, docId))
                         .then(doc => {
                             const { displayName, photoURL } = doc.data()
                             setChatList(prevChats => [...prevChats, { photoURL, displayName, id: chat.id }])
                         })
                 })
-            })
+            }
         }
 
         const pushOtherUsers = async (chats) => {
             const otherChatUsers = []
-            await chats.forEach(chat => {
+            for (const chat of chats) {
                 otherChatUsers.push(chat.users.filter(value => value !== uid).toString())
-            })
+            }
 
-            await usersDBfilter.get()
+            await getDocs(usersDBfilter)
                 .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         if (!otherChatUsers.includes(doc.id) && doc.id !== uid) {
@@ -55,20 +56,20 @@ const Users = ({ firestore, uid }) => {
                     })
                 })
         }
-        
-        const updateLastLoggedIn = () => {
-            usersDB.doc(uid).get()
-            .then((doc) => {
-                const { lastLoggedIn } = doc.data()
+
+        const updateLastLoggedIn = async () => {
+            const res = await getDoc(doc(usersDB, uid))
+            if (res.exists()) {
+                const { lastLoggedIn } = res.data()
                 const currentDate = new Date()
                 const lastLoggedInMinutes = Math.round(lastLoggedIn.toMillis() / 1000 / 100)
                 const currentDateMinutes = Math.round(currentDate.getTime() / 1000 / 100)
 
                 if (lastLoggedInMinutes !== currentDateMinutes) {
-                    usersDB.doc(uid).update({lastLoggedIn: firebase.firestore.FieldValue.serverTimestamp()})
-                    .catch(e => console.error(e))
+                    await updateDoc(doc(usersDB, uid), {lastLoggedIn: serverTimestamp()})
+                        .catch(e => console.error(e))
                 }
-            }).catch(e => console.error(e))
+            }
         }
 
         pushUsers()

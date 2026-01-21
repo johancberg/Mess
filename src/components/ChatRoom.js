@@ -1,13 +1,9 @@
 import React, {useRef, useState, useEffect} from 'react';
+import { addDoc, collection, doc, getDocs, orderBy, query, where, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 // Components
 import ChatMessage from './ChatMessage';
 import Error from './Error';
-
-// Firebase imports
-import firebase from 'firebase/compat/app';
-import 'firebase/firestore';
-import 'firebase/auth';
 
 import { useLocation } from 'react-router-dom';
 
@@ -18,8 +14,9 @@ const ChatRoom = ({ auth, firestore }) => {
 
     const searchParams = useQuery();
     const chatParam = searchParams.get("id");
-    const chatRef = firestore.collection('chats').doc(chatParam);
-    const messageRef = firestore.collection('messages').orderBy('createdAt').where('cid', '==', chatParam);
+    const chatRef = doc(firestore, 'chats', chatParam);
+    const messageRef = collection(firestore, 'messages');
+    const messageQuery = query(messageRef, orderBy('createdAt'), where('cid', '==', chatParam));
 
     const [formValue, setFormValue] = useState('');
     const [reply, setReply] = useState(false);
@@ -37,37 +34,37 @@ const ChatRoom = ({ auth, firestore }) => {
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid, photoURL, displayName } = auth.currentUser;
-        messageRef.get().then(docs => docs.forEach(doc => console.log(doc.data())))
+        getDocs(messageQuery).then(docs => docs.forEach(doc => console.log(doc.data())))
         if (reply.message) {
-            await messageRef.add({
+            await addDoc(messageRef, {
                 displayName,
                 text: formValue,
                 replyText: reply.message.text,
                 replyName: reply.message.displayName,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: serverTimestamp(),
                 uid,
                 cid: chatParam,
                 photoURL
             }).then(() => setReply(false));
             
         } else {
-            await messageRef.add({
+            await addDoc(messageRef, {
                 displayName: displayName,
                 text: formValue,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: serverTimestamp(),
                 uid,
                 cid: chatParam,
                 photoURL
             });
         }
-        await chatRef.update({ recentPost: firebase.firestore.FieldValue.serverTimestamp() })
+        await updateDoc(chatRef, { recentPost: serverTimestamp() })
         setFormValue('');
         scroll.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     // Checks if the user should be able to read this chat
     useEffect(() => {
-        firestore.collection('chats').doc(chatParam).get()
+        getDocs(query(firestore, 'chats', where('id', '==', chatParam)))
         .then(snapshot => {
             const cidQuery = snapshot.data()
             const { uid } = auth.currentUser
@@ -84,13 +81,13 @@ const ChatRoom = ({ auth, firestore }) => {
 
     // Gets all the chat-id-messages
     useEffect(() => {
-        messageRef.get()
+        getDocs(messageQuery)
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 setMessages(docs => [...docs, doc.data()])
             });
         }).catch(e => console.log(e))
-    }, [chatParam])
+    }, [messageQuery])
 
     return (
         warning

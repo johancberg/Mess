@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { format } from "date-fns";
 
-// Firebase imports
-import 'firebase/firestore';
-import 'firebase/auth';
-
 const ChatMessage = ({ auth, message, setReply }) => {
     const { displayName, text, replyText, replyName, uid, photoURL, createdAt } = message;
     const messageClass = (uid === auth.currentUser.uid ? 'sent' : 'received');

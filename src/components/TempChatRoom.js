@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from 'react';
-
-// Firebase imports
-import firebase from 'firebase/compat/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-
 import { useLocation, useNavigate } from 'react-router-dom';
+import { addDoc, collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+
 
 const TempChatRoom = ({ auth, firestore }) => {
     const [chatParam, setChatParam] = useState()
@@ -29,15 +25,15 @@ const TempChatRoom = ({ auth, firestore }) => {
         e.preventDefault();
         const { uid, photoURL, displayName } = auth.currentUser;
 
-        await firestore.collection('chats').doc(chatParam).set({
+        await setDoc(doc(firestore, 'chats', chatParam), {
             id: chatParam,
-            recentPost: firebase.firestore.FieldValue.serverTimestamp(),
+            recentPost: serverTimestamp(),
             users: [ uid, userId ]
-        }).then(() => {
-            firestore.collection('messages').add({
+        }).then(async () => {
+            await addDoc(collection(firestore, 'messages'), {
                 displayName: displayName,
                 text: formValue,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: serverTimestamp(),
                 uid,
                 cid: chatParam,
                 photoURL

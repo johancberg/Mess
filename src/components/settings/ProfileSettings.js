@@ -1,31 +1,29 @@
 import React, {useState} from 'react'
+import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore' 
 
 const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
     const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
     const [nameInput, setNameinput] = useState(auth.currentUser.displayName || '')
-    const messageRef = firestore.collection('messages')
-    const userRef = firestore.collection('users')
-  
-    
+    const messageRef = collection(firestore, 'messages')
+    const userRef = collection(firestore, 'users')
+
+
     // auth.currentUser.photoURL is null
   
     const changePhotoURL = () => {
-        messageRef.where('uid', '==', auth.currentUser.uid).get()
-        .then(querySnapshot => {
+        getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                messageRef.doc(doc.id).update({photoURL: URLinput})
+                updateDoc(doc.ref, {photoURL: URLinput})
                 auth.currentUser.updateProfile({photoURL: URLinput})
             });
         }).catch(e => console.log(e))
-
-        userRef.doc(auth.currentUser.uid).update({
+        updateDoc(userRef.doc(auth.currentUser.uid), {
             photoURL: URLinput
         })
     }
 
     const changeName = () => {
-        messageRef.where('uid', '==', auth.currentUser.uid).get()
-        .then(querySnapshot => {
+        getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 messageRef.doc(doc.id).update({displayName: nameInput})
 				auth.currentUser.updateProfile({displayName: nameInput})
