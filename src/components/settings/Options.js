@@ -11,7 +11,7 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
     useEffect(() => {
         getDocs(query(dbUsers, where('uid', '==', auth.currentUser.uid)))
             .then((snapshot) => {
-                const data = snapshot.docs.map((doc) => doc.data())[0];
+                const [data] = snapshot.docs.map((doc) => doc.data());
                 // Loop through the data and store
                 // it in array to display
                 setData(data);
