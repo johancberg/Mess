@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore' 
+import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore' 
 
 const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
     const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
@@ -17,7 +17,7 @@ const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
                 auth.currentUser.updateProfile({photoURL: URLinput})
             });
         }).catch(e => console.log(e))
-        updateDoc(userRef.doc(auth.currentUser.uid), {
+        updateDoc(doc(userRef, auth.currentUser.uid), {
             photoURL: URLinput
         })
     }
@@ -25,12 +25,12 @@ const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
     const changeName = () => {
         getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                messageRef.doc(doc.id).update({displayName: nameInput})
+                updateDoc(doc(messageRef, doc.id), {displayName: nameInput})
 				auth.currentUser.updateProfile({displayName: nameInput})
             });
 		}).catch(e => console.log(e))
 
-		userRef.doc(auth.currentUser.uid).update({
+        updateDoc(doc(userRef, auth.currentUser.uid), {
 			displayName: nameInput
 		})
     }
