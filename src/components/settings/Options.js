@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router'
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
 
 const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
     const [menu, setMenu] = useState(false);
@@ -29,7 +30,7 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
                 <button onClick={() => {setChangeProfile(true); setMenu(!menu)}}>Profile settings</button>
                 <button onClick={() => {setChangeGeneral(true); setMenu(!menu)}}>General settings</button>
                 <button onClick={() => {setMenu(!menu); navigate('about')}}>About Mess</button>
-                <button onClick={() => {auth.signOut(); setMenu(!menu)}}>Sign out</button>
+                <button onClick={() => {signOut(auth); setMenu(!menu)}}>Sign out</button>
             </dialog>
             }
         </>
