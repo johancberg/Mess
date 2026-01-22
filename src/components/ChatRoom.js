@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-import { addDoc, collection, doc, getDocs, orderBy, query, where, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 // Components
 import ChatMessage from './ChatMessage';
@@ -64,7 +64,7 @@ const ChatRoom = ({ auth, firestore }) => {
 
     // Checks if the user should be able to read this chat
     useEffect(() => {
-        getDocs(query(firestore, 'chats', where('id', '==', chatParam)))
+        getDoc(chatRef)
         .then(snapshot => {
             const cidQuery = snapshot.data()
             const { uid } = auth.currentUser
@@ -72,7 +72,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 setWarning(true)
             }
         })
-    }, [firestore, auth.currentUser, chatParam])
+    }, [chatRef])
 
     // Scrolls the chat to the bottom
     useEffect(() => {
@@ -87,7 +87,7 @@ const ChatRoom = ({ auth, firestore }) => {
                 setMessages(docs => [...docs, doc.data()])
             });
         }).catch(e => console.log(e))
-    }, [messageQuery])
+    }, [])
 
     return (
         warning
