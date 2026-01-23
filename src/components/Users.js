@@ -18,7 +18,7 @@ const Users = ({ firestore, uid }) => {
                 querySnapshot.forEach(doc => {
                     const { users } = doc.data()
                     if (users.some(user => user === uid)) {
-                        tempList.push({ id: doc.id, ...doc.data() })
+                        tempList.push(doc.data())
                     }
                 })
                 pushChatLists(tempList)
@@ -26,7 +26,6 @@ const Users = ({ firestore, uid }) => {
             })
         }
     
-        // TODO: Refactor with the new id field on line 21
         const pushChatLists = (chats) => {
             for (const chat of chats) {
                 const otherChatUsers = chat.users.filter(value => value !== uid)
@@ -66,7 +65,7 @@ const Users = ({ firestore, uid }) => {
                 const currentDateMinutes = Math.round(currentDate.getTime() / 1000 / 100)
 
                 if (lastLoggedInMinutes !== currentDateMinutes) {
-                    await updateDoc(doc(usersDB, uid), {lastLoggedIn: serverTimestamp()})
+                    await updateDoc(doc(usersDB, uid), { lastLoggedIn: serverTimestamp() })
                         .catch(e => console.error(e))
                 }
             }
