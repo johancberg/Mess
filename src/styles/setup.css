@@ -382,6 +382,17 @@ body {
     color: white;
   }
 
+  p.whiteAnchor {
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  p.whiteAnchor:hover {
+    text-decoration: underline;
+  }
+
   .main-content {
     margin: 0.4em 3em;
     display: flex;
