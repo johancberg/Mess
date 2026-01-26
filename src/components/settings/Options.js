@@ -4,10 +4,28 @@ import { collection, doc, getDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 
 const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
-    const [menu, setMenu] = useState(false);
     const [data, setData] = useState({});
     const navigate = useNavigate();
     const dbUsers = collection(firestore, 'users');
+    const [menu] = document.getElementsByTagName('dialog');
+
+    const toggleMenu = () => {
+        if (menu?.open === false) {
+            menu.showModal();
+        } else {
+            menu.close();
+        }
+    }
+
+    const getMenu = () => {
+        return (menu?.open === true);
+    }
+
+    const onDialog = (e) => {
+        if (e.target === e.currentTarget) {
+            toggleMenu();
+        }
+    }
 
     useEffect(() => {
         getDoc(doc(dbUsers, auth.currentUser.uid))
@@ -21,18 +39,16 @@ const Options = ({auth, firestore, setChangeProfile, setChangeGeneral}) => {
 
     return (
         <>
-            <button className="options" onClick={() => setMenu(!menu)}>
+            <button className="options" onClick={() => toggleMenu()}>
                 <b className="username">{data?.displayName || ''}</b>
                 <img src={data?.photoURL || 'https://imgflip.com/s/meme/Derp.jpg'} alt="profile"/>
             </button>
-            { menu && <div className="dropdownBlocker" onClick={() => setMenu(!menu)}></div> }
-            { <dialog className="dropdownMenu" open={menu} aria-modal={menu} aria-hidden={!menu}>
-                <button onClick={() => {setChangeProfile(true); setMenu(!menu)}}>Profile settings</button>
-                <button onClick={() => {setChangeGeneral(true); setMenu(!menu)}}>General settings</button>
-                <button onClick={() => {setMenu(!menu); navigate('about')}}>About Mess</button>
-                <button onClick={() => {signOut(auth); setMenu(!menu)}}>Sign out</button>
+            <dialog className="dropdownMenu" open={getMenu()} aria-modal={getMenu()} aria-hidden={!getMenu()} onClick={onDialog}>
+                <button onClick={() => {setChangeProfile(true); toggleMenu()}}>Profile settings</button>
+                <button onClick={() => {setChangeGeneral(true); toggleMenu()}}>General settings</button>
+                <button onClick={() => {toggleMenu(); navigate('about')}}>About Mess</button>
+                <button onClick={() => {signOut(auth); toggleMenu()}}>Sign out</button>
             </dialog>
-            }
         </>
     )
 }

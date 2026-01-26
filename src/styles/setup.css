@@ -245,12 +245,9 @@ body {
     margin: 0.1em 0;
   }
   
-  .dropdownBlocker {
+  .dropdownBlocker, dialog:-internal-dialog-in-top-layer::backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 3;
   }
