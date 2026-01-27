@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore' 
+import Dialog from '../Dialog'
 
-const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
+const ProfileSettings = ({auth, firestore, ref}) => {
     const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
     const [nameInput, setNameinput] = useState(auth.currentUser.displayName || '')
     const messageRef = collection(firestore, 'messages')
@@ -43,7 +44,7 @@ const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
         if (auth.currentUser.displayName !== nameInput) {
             changeName()
         }
-        setChangeProfile(false)
+        ref.current.close()
     }
 
     const deleteProfile = (e) => {
@@ -52,8 +53,8 @@ const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
     }
 
     return (
-        <div className="option-photo" onSubmit={changeProfile}>
-            <form className="settings">
+        <Dialog classString="option-photo" ref={ref}>
+            <form className="settings" onSubmit={changeProfile}>
                 <div className="option"><label>Name</label>
                 <input type="text" onChange={e => setNameinput(e.target.value)} value={nameInput}></input></div>
 
@@ -65,7 +66,7 @@ const ProfileSettings = ({auth, firestore, setChangeProfile}) => {
 					<div className="save-button"><button onClick={changeProfile}>Save</button></div>
                 </div>
             </form>
-        </div>
+        </Dialog>
     )
 }
 

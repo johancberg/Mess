@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import Dialog from '../Dialog';
 
-const GeneralSettings = ({setChangeGeneral}) => {
+const GeneralSettings = ({ref}) => {
     const [colorInput, setColorinput] = useState( localStorage.getItem("mess-theme") === "light" ? true : false );
 
     useEffect(() => {
@@ -15,12 +16,12 @@ const GeneralSettings = ({setChangeGeneral}) => {
 
     const changeSettings = (e) => {
         e.preventDefault()
-        setChangeGeneral(false)
+        ref.current.close()
     }
 
     return (
-        <div className="option-photo" onSubmit={changeSettings}>
-            <form className="settings">
+        <Dialog classString="option-photo" ref={ref}>
+            <form className="settings" onSubmit={changeSettings}>
                 <div className="option"><label>UI Color</label>
                     <div>
                         <input type="radio" checked={!colorInput} onChange={() => setColorinput(false)} name="color"></input><label>Dark</label>
@@ -29,7 +30,7 @@ const GeneralSettings = ({setChangeGeneral}) => {
                 </div>
                 <div className="save-button"><button onClick={changeSettings}>Close</button></div>
             </form>
-        </div>
+        </Dialog>
     )
 }
 

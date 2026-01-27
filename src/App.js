@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { initializeApp } from 'firebase/app';
@@ -21,8 +21,8 @@ const firestore = getFirestore(app);
 
 function App() {
   const [user] = useAuthState(auth);
-  const [changeProfile, setChangeProfile] = useState(false)
-  const [changeGeneral, setChangeGeneral] = useState(false)
+  const generalRef = useRef();
+  const profileRef = useRef();
 
   useEffect(() => {
     if (!localStorage.getItem('mess-theme')) {
@@ -37,7 +37,7 @@ function App() {
     return (
       <header className="App-header">
         <Link to="/"><img className="mainLogo" src="logo.png" alt="Logo saying Mess" /></Link>
-        { auth.currentUser && <Options auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} setChangeGeneral={setChangeGeneral} /> }
+        { auth.currentUser && <Options auth={auth} firestore={firestore} profileRef={profileRef} generalRef={generalRef} /> }
       </header>
     )
   });
@@ -45,14 +45,9 @@ function App() {
   const Settings = React.memo(() => {
     return (
       <>
-      { (changeProfile || changeGeneral) && 
-          <div className="dropdownBlocker" onClick={() => {setChangeProfile(false); setChangeGeneral(false);}}></div>
+      { <ProfileSettings auth={auth} firestore={firestore} ref={profileRef} />
       }
-      { changeProfile &&
-          <ProfileSettings auth={auth} firestore={firestore} setChangeProfile={setChangeProfile} />
-      }
-      { changeGeneral &&
-          <GeneralSettings setChangeGeneral={setChangeGeneral} />
+      { <GeneralSettings ref={generalRef} />
       }
       </>
     )});
