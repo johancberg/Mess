@@ -2,7 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 // Components
-import ChatMessage from './ChatMessage';
+import ChatMessage from '../components/ChatMessage';
 import Error from './Error';
 
 import { useLocation } from 'react-router-dom';
