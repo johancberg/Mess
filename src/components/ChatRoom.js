@@ -3,7 +3,7 @@ import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where, server
 
 // Components
 import ChatMessage from './ChatMessage';
-import Error from './Error';
+import Error from '../routes/Error';
 
 import { useLocation } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import User from './User.js'
+import User from '../components/User.js'
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 const Users = ({ firestore, uid }) => {

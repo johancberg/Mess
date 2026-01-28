@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import About from './About'
+import About from '../routes/About'
 import ChatRoom from './ChatRoom'
 import TempChatRoom from './TempChatRoom'
-import Error from './Error'
-import Users from './Users'
+import Error from '../routes/Error'
+import Users from '../routes/Users'
 
 const Main = ({auth, firestore}) => {
 

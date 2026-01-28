@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 
-const About = () => {
+const About = ({ auth, firestore, profileRef, generalRef }) => {
 
     return (
         <div>
-            <Header auth={null} firestore={null} profileRef={null} generalRef={null} />
+            <Header auth={auth} firestore={firestore} profileRef={profileRef} generalRef={generalRef} />
             <main className="main-content">
                 <div>
                     <h2>What is Mess?</h2>

@@ -13,10 +13,10 @@ import ApiKey from './components/ApiKey'
 import ProfileSettings from './components/settings/ProfileSettings'
 import GeneralSettings from './components/settings/GeneralSettings'
 import ChatRoom from './components/ChatRoom';
-import About from './components/About';
-import Error from './components/Error';
+import About from './routes/About';
+import Error from './routes/Error';
 import Header from './components/Header';
-import Users from './components/Users';
+import Chat from './routes/Chat';
 
 const app = initializeApp(ApiKey());
 const auth = getAuth(app);
@@ -24,11 +24,11 @@ const firestore = getFirestore(app);
 
 export const routeData = [
   { path: '/', element: <App/> },
-  { path: 'c', element: <ChatRoom/>, children: 
-    [{ path: ':id', element: <ChatRoom/>
-    }],
+  { path: 'c', element: <Chat auth={auth} firestore={firestore}  />, children: 
+    [{ path: ':id', element: <Chat auth={auth} firestore={firestore} /> }
+    ],
   },
-  { path: 'about', element: <About/> },
+  { path: 'about', element: <About auth={auth} firestore={firestore} /> },
   { path: '*', element: <Error/> }
   // TODO: Create ErrorBoundary component to catch errors in routes
 ];
