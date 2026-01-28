@@ -8,7 +8,7 @@ import Options from './settings/Options';
     return (
       <header className="App-header">
         <Link to="/"><img className="mainLogo" src="logo.png" alt="Logo saying Mess" /></Link>
-        { auth?.currentUser && <Options auth={auth} firestore={firestore} profileRef={profileRef} generalRef={generalRef} /> }
+        { auth.currentUser && <Options auth={auth} firestore={firestore} profileRef={profileRef} generalRef={generalRef} /> }
       </header>
     )
   });
