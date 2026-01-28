@@ -535,14 +535,14 @@ body {
     background-color: var(--white-color);
   }
   
-  body[data-theme*=dark] h1,
-  body[data-theme*=dark] h2,
-  body[data-theme*=dark] h3,
-  body[data-theme*=dark] h4,
-  body[data-theme*=dark] h5,
-  body[data-theme*=dark] h6,
+  body[data-theme*=dark] h1, h1,
+  body[data-theme*=dark] h2, h2,
+  body[data-theme*=dark] h3, h3,
+  body[data-theme*=dark] h4, h4,
+  body[data-theme*=dark] h5, h5,
+  body[data-theme*=dark] h6, h6,
   body[data-theme*=dark] label,
-  body[data-theme*=dark] .switch-login p
+  body[data-theme*=dark] .switch-login p,
   body[data-theme*=dark] .error-page p {
     color: var(--white-color) !important;
   }

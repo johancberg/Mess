@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
@@ -11,13 +10,28 @@ import './fontawesome/css/all.css';
 import Main from './components/Main'
 import SignIn from './components/SignIn'
 import ApiKey from './components/ApiKey'
-import Options from './components/settings/Options'
 import ProfileSettings from './components/settings/ProfileSettings'
 import GeneralSettings from './components/settings/GeneralSettings'
+import ChatRoom from './components/ChatRoom';
+import About from './components/About';
+import Error from './components/Error';
+import Header from './components/Header';
+import Users from './components/Users';
 
 const app = initializeApp(ApiKey());
 const auth = getAuth(app);
 const firestore = getFirestore(app);
+
+export const routeData = [
+  { path: '/', element: <App/> },
+  { path: 'c', element: <ChatRoom/>, children: 
+    [{ path: ':id', element: <ChatRoom/>
+    }],
+  },
+  { path: 'about', element: <About/> },
+  { path: '*', element: <Error/> }
+  // TODO: Create ErrorBoundary component to catch errors in routes
+];
 
 function App() {
   const [user] = useAuthState(auth);
@@ -33,28 +47,17 @@ function App() {
     }
   }, [])
 
-  const Header = React.memo(() => {
-    return (
-      <header className="App-header">
-        <Link to="/"><img className="mainLogo" src="logo.png" alt="Logo saying Mess" /></Link>
-        { auth.currentUser && <Options auth={auth} firestore={firestore} profileRef={profileRef} generalRef={generalRef} /> }
-      </header>
-    )
-  });
-
   const Settings = React.memo(() => {
     return (
       <>
-      { <ProfileSettings auth={auth} firestore={firestore} ref={profileRef} />
-      }
-      { <GeneralSettings ref={generalRef} />
-      }
+        <ProfileSettings auth={auth} firestore={firestore} ref={profileRef} />
+        <GeneralSettings ref={generalRef} />
       </>
     )});
 
   return (
     <div className="App">
-      <Header />
+      <Header auth={auth} firestore={firestore} profileRef={profileRef} generalRef={generalRef} />
       { user ? <Main auth={auth} firestore={firestore} /> : <SignIn auth={auth} firestore={firestore} /> }
       { auth.currentUser && <Settings /> }
     </div>
