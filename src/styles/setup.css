@@ -360,12 +360,7 @@ body {
   }
   
   p {
-    max-width: 500px;
     line-height: 24px;
-    padding: 10px 20px;
-    margin: 0;
-    border-radius: 25px;
-    position: relative;
   }
 
   p.bottomRight {
@@ -394,6 +389,17 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    row-gap: 3em;
+    column-gap: 1em;
+  }
+
+  .main-content div {
+    flex: 1 1 350px;
+  }
+
+  .main-content img {
+    flex: 0 0 400px;
   }
 
   .main-content h2 {
@@ -464,6 +470,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  
+  .message-info p {
+    max-width: 500px;
+    padding: 10px 20px;
+    margin: 0;
+    border-radius: 25px;
+    position: relative;
   }
   
   .message-info .sent {
