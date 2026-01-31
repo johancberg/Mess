@@ -3,7 +3,7 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 //Components
-import PasswordInput from './PasswordInput';
+import PasswordInput from '../components/PasswordInput';
 import { Link } from 'react-router-dom';
 
 const SignIn = ({ auth, firestore }) => {
