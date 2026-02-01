@@ -175,6 +175,10 @@ body {
     background: rgb(238, 238, 238);
   }
   
+  .input-message input:focus-visible {
+    outline: 3px solid #0b93f6;
+  }
+  
   .login-buttons button {
     margin:  0.7em 0.7em 0.3em;
   }
