@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
 import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore' 
+import { updateProfile } from "firebase/auth";
 import Dialog from '../Dialog'
 
 const ProfileSettings = ({auth, firestore, ref}) => {
     const [URLinput, setURLinput] = useState(auth.currentUser.photoURL || '')
+    // TODO: nameInput default seems to be taken from firebase auth and not database
     const [nameInput, setNameinput] = useState(auth.currentUser.displayName || '')
     const messageRef = collection(firestore, 'messages')
     const userRef = collection(firestore, 'users')
@@ -15,7 +17,7 @@ const ProfileSettings = ({auth, firestore, ref}) => {
         getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 updateDoc(doc.ref, {photoURL: URLinput})
-                auth.currentUser.updateProfile({photoURL: URLinput})
+                updateProfile(auth.currentUser, {photoURL: URLinput})
             });
         }).catch(e => console.log(e))
         updateDoc(doc(userRef, auth.currentUser.uid), {
@@ -27,7 +29,7 @@ const ProfileSettings = ({auth, firestore, ref}) => {
         getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 updateDoc(doc(messageRef, doc.id), {displayName: nameInput})
-				auth.currentUser.updateProfile({displayName: nameInput})
+				updateProfile(auth.currentUser, {displayName: nameInput})
             });
 		}).catch(e => console.log(e))
 
