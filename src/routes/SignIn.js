@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInSchema, registerSchema } from '../schemas/auth'; 
 
 //Components
 import PasswordInput from '../components/PasswordInput';
@@ -37,27 +38,30 @@ const SignIn = ({ auth, firestore }) => {
     // Gets executed when use logs in or register using email and password
     const signInWithPassword = async (e) => {
         e.preventDefault()
+        const schema = registerPage ? registerSchema : signInSchema;
+        const result = schema.safeParse(form)
+
+        if (!result.success) {
+            alert(`Error: ${result.error.issues[0].message}`)
+            return;
+        }
+
+        const { email, password, name } = result.data
         if (registerPage) {
             //Register
-            if (form.password !== form.rewritePassword) {
-                alert('Error: The passwords do not match. Try again.')
-            } else if (form.password.length < 6) {
-                alert('Error: The password has to be 6 characters or longer.')
-            } else {
-                try {
-                    const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password)
-                    await setDoc(doc(firestore, 'users', userCredential.user.uid), {
-                        displayName: form.name,
-                        lastLoggedIn: serverTimestamp(),
-                        photoURL: '',
-                        verified: false
-                    })
-                }
-                catch(error) { alert(error) }
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+                await setDoc(doc(firestore, 'users', userCredential.user.uid), {
+                    displayName: name,
+                    lastLoggedIn: serverTimestamp(),
+                    photoURL: '',
+                    verified: false
+                })
             }
+            catch(error) { alert(error) }
         } else {
             //Login
-            await signInWithEmailAndPassword(auth, form.email, form.password)
+            await signInWithEmailAndPassword(auth, email, password)
             .catch(error => alert(error))
         }
     }
