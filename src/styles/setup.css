@@ -232,6 +232,10 @@ body {
     right: 0.8em;
   }
 
+  body[data-theme*=light] .options {
+    background: #CCCCCC;
+  }
+
   .dropdownMenu {
     position: absolute;
     right: 3em;
@@ -377,14 +381,22 @@ body {
     color: white;
   }
 
-  p.whiteAnchor {
+  body[data-theme*=dark] p.boldAnchor {
     color: white;
+  }
+
+  body[data-theme*=light] p.boldAnchor {
+    color: var(--black-color);
+  }
+
+  p.boldAnchor {
+    color: var(--white-color);
     font-weight: 700;
     cursor: pointer;
     text-align: center;
   }
 
-  p.whiteAnchor:hover {
+  p.boldAnchor:hover {
     text-decoration: underline;
   }
 
