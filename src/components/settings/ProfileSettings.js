@@ -13,29 +13,32 @@ const ProfileSettings = ({auth, firestore, ref}) => {
 
     // auth.currentUser.photoURL is null
   
-    const changePhotoURL = () => {
-        getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                updateDoc(doc.ref, {photoURL: URLinput})
-                updateProfile(auth.currentUser, {photoURL: URLinput})
+    const changePhotoURL = async () => {
+        try {
+            await getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
+                querySnapshot.forEach(async (msg) => {
+                    await updateDoc(msg.ref, {photoURL: URLinput})
+                });
             });
-        }).catch(e => console.log(e))
-        updateDoc(doc(userRef, auth.currentUser.uid), {
-            photoURL: URLinput
-        })
+            await updateDoc(doc(userRef, auth.currentUser.uid), { photoURL: URLinput });
+            await updateProfile(auth.currentUser, {photoURL: URLinput})
+        } catch(e) {
+            console.error("Error when updating photoURL: ", e);
+        }
     }
 
-    const changeName = () => {
-        getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                updateDoc(doc(messageRef, doc.id), {displayName: nameInput})
-				updateProfile(auth.currentUser, {displayName: nameInput})
+    const changeName = async () => {
+        try {
+            await getDocs(query(messageRef, where('uid', '==', auth.currentUser.uid))).then(querySnapshot => {
+                querySnapshot.forEach(async (msg) => {
+                    await updateDoc(doc(messageRef, msg.id), {displayName: nameInput})
+                });
             });
-		}).catch(e => console.log(e))
-
-        updateDoc(doc(userRef, auth.currentUser.uid), {
-			displayName: nameInput
-		})
+            await updateDoc(doc(userRef, auth.currentUser.uid), {displayName: nameInput});
+            await updateProfile(auth.currentUser, {displayName: nameInput});
+        } catch (e) {
+            console.error("Error when updating the display name: ", e)
+        }
     }
 
     const changeProfile = (e) => {
