@@ -9,11 +9,11 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 const Layout = ({ auth, firestore }) => {
   useEffect(() => {
-    if (!localStorage.getItem('mess-theme')) {
+    const local = localStorage.getItem('mess-theme');
+    if (!local) {
       document.body.setAttribute('data-theme', 'dark');
     } else {
-      const value = localStorage.getItem('mess-theme');
-      document.body.setAttribute('data-theme', value === 'dark' ? 'dark' : 'light');
+      document.body.setAttribute('data-theme', local === 'dark' ? 'dark' : 'light');
     }
   }, []);
 
